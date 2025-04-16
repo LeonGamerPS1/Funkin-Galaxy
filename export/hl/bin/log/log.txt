@@ -1,0 +1,4 @@
+[14:35:53 source/backend/Log.hx:16] INFO: Logger Initialized
+[14:35:53 source/backend/NoteSkinConfig.hx:26] TRACE: parsed skin default
+[14:35:53 source/PlayState.hx:11] TRACE: fuck
+[14:36:07 source/backend/Log.hx:23] INFO: Log Written

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="note.png">
+	<!-- Created with Adobe Animate version 21.0.9.42677 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="arrowDOWN0000" x="952" y="0" width="161" height="160"/>
+	<SubTexture name="arrowLEFT0000" x="588" y="575" width="161" height="160"/>
+	<SubTexture name="arrowRIGHT0000" x="952" y="160" width="161" height="160"/>
+	<SubTexture name="arrowUP0000" x="948" y="320" width="161" height="160"/>
+	<SubTexture name="down0000" x="760" y="381" width="160" height="160"/>
+	<SubTexture name="down glow0000" x="0" y="0" width="284" height="284"/>
+	<SubTexture name="down glow0001" x="0" y="0" width="284" height="284"/>
+	<SubTexture name="down glow0002" x="568" y="0" width="192" height="194" frameX="-48" frameY="-45" frameWidth="284" frameHeight="284"/>
+	<SubTexture name="down glow0003" x="568" y="388" width="187" height="187" frameX="-50" frameY="-48" frameWidth="284" frameHeight="284"/>
+	<SubTexture name="down hold end0000" x="634" y="735" width="46" height="50"/>
+	<SubTexture name="down hold piece0000" x="749" y="701" width="46" height="64"/>
+	<SubTexture name="left0000" x="920" y="480" width="160" height="160"/>
+	<SubTexture name="left glow0000" x="0" y="284" width="284" height="284"/>
+	<SubTexture name="left glow0001" x="0" y="284" width="284" height="284"/>
+	<SubTexture name="left glow0002" x="209" y="568" width="192" height="194" frameX="-45" frameY="-45" frameWidth="284" frameHeight="284"/>
+	<SubTexture name="left glow0003" x="760" y="194" width="188" height="187" frameX="-48" frameY="-48" frameWidth="284" frameHeight="284"/>
+	<SubTexture name="left hold end0000" x="680" y="735" width="46" height="50"/>
+	<SubTexture name="left hold piece0000" x="795" y="701" width="46" height="64"/>
+	<SubTexture name="right0000" x="755" y="541" width="160" height="160"/>
+	<SubTexture name="right glow0000" x="284" y="0" width="284" height="284"/>
+	<SubTexture name="right glow0001" x="284" y="0" width="284" height="284"/>
+	<SubTexture name="right glow0002" x="568" y="194" width="192" height="194" frameX="-48" frameY="-45" frameWidth="284" frameHeight="284"/>
+	<SubTexture name="right glow0003" x="0" y="568" width="209" height="209" frameX="-39" frameY="-37" frameWidth="284" frameHeight="284"/>
+	<SubTexture name="right hold end0000" x="1075" y="640" width="46" height="50"/>
+	<SubTexture name="right hold piece0000" x="841" y="701" width="46" height="64"/>
+	<SubTexture name="up0000" x="915" y="640" width="160" height="160"/>
+	<SubTexture name="up glow0000" x="284" y="284" width="284" height="284"/>
+	<SubTexture name="up glow0001" x="284" y="284" width="284" height="284"/>
+	<SubTexture name="up glow0002" x="760" y="0" width="192" height="194" frameX="-48" frameY="-45" frameWidth="284" frameHeight="284"/>
+	<SubTexture name="up glow0003" x="401" y="575" width="187" height="187" frameX="-50" frameY="-48" frameWidth="284" frameHeight="284"/>
+	<SubTexture name="up hold end0000" x="1075" y="690" width="46" height="50"/>
+	<SubTexture name="up hold piece0000" x="588" y="735" width="46" height="64"/>
+</TextureAtlas>
