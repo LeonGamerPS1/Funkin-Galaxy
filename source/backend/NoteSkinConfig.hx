@@ -11,37 +11,40 @@ typedef NoteSkinData =
 
 class NoteSkinConfig
 {
-	static public var noteSkins(default,
-		null):Map<String, NoteSkinData> = []; // unsafe get is noteSkins.get, safe is getSkin(). (returns default/fallback sometimes)
+	public static var noteSkins(default, null):Map<String, NoteSkinData> = new Map();
 
-	public static inline function init()
+	public static inline function init():Void
 	{
-		for (skinPath in Assets.readAssetsDirectoryFromLibrary('images/noteSkins', 'TEXT', '.json'))
+		final skinPaths = Assets.readAssetsDirectoryFromLibrary('images/noteSkins', 'TEXT', '.json');
+
+		for (skinPath in skinPaths)
 		{
-			var rawSkinData:String = Assets.getText(skinPath);
-			var skin:NoteSkinData;
+			var rawSkinData = Assets.getText(skinPath);
+
 			try
 			{
-				skin = cast Json.parse(rawSkinData);
-                trace('parsed skin ${skin.name}');
+				var skin = cast Json.parse(rawSkinData);
+				noteSkins.set(skin.name, skin);
 			}
-			catch (e_:Dynamic)
+			catch (e:Dynamic)
 			{
-				Log.error('Failed to parse skin $skinPath');
-				continue;
+				Log.error('Failed to parse skin $skinPath: $e');
 			}
-			noteSkins.set(skin.name, skin);
 		}
 	}
 
-	public static inline function getSkin(_):NoteSkinData
+	public static inline function getSkin(name:String):NoteSkinData
 	{
-		var skin = noteSkins.get(_);
-		if (skin == null) {
-			skin = {image: "noteSkins/note", scaleFactor: 0.7, name: "Default"};
-            Log.warn('Skin $_ not found. Reverting...');
-        }
+		return noteSkins.exists(name) ? noteSkins.get(name) : getDefaultSkin(name);
+	}
 
-		return skin;
+	private static inline function getDefaultSkin(missingName:String):NoteSkinData
+	{
+		Log.warn('Skin "$missingName" not found. Reverting to default.');
+		return {
+			image: "noteSkins/note",
+			scaleFactor: 0.7,
+			name: "Default"
+		};
 	}
 }

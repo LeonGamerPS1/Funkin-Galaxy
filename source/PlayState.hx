@@ -1,7 +1,6 @@
 package;
 
 import flixel.FlxState;
-import object.ReceptorStrumNote;
 
 class PlayState extends FlxState
 {
@@ -9,7 +8,7 @@ class PlayState extends FlxState
 	{
 		super.create();
 		trace('fuck');
-		add(new ReceptorStrumNote());
+		add(new Strumline());
 
 	}
 
