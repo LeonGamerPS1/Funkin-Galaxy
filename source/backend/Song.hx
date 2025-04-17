@@ -83,13 +83,14 @@ class Song
 		};
 	}
 
-	public static function fromPsychLegacy(legacyJson:moonchart.formats.fnf.legacy.FNFPsych):SongMap
+	public static function fromPsychLegacy(legacyJson:moonchart.formats.fnf.legacy.FNFPsych)
 	{
 		// TODO: Finish chart converter for legacy psych to galaxy
 	}
 
-	public static function fromPsych(legacyJson:moonchart.formats.fnf.FNFVSlice):SongMap
+	public static function fromPsych(legacyJson:moonchart.formats.fnf.FNFVSlice)
 	{
 		// TODO: Finish chart converter for  vslice to galaxy
+
 	}
 }
