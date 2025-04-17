@@ -1,9 +1,12 @@
 package;
 
 import backend.Song.SongMap;
+import haxe.io.Bytes;
+import lime.ui.FileDialog;
+import moonchart.formats.fnf.legacy.FNFPsych;
+import openfl.net.FileReference;
 
-class PlayState extends FlxState
-{
+class PlayState extends FlxState {
 	public var playfield:Playfield;
 	public var tracks:Map<String, FlxSound> = [];
 
@@ -12,8 +15,7 @@ class PlayState extends FlxState
 
 	public static var song:SongMap;
 
-	override public function create()
-	{
+	override public function create() {
 		if (song == null)
 			song = Song.grabSong();
 
@@ -27,7 +29,7 @@ class PlayState extends FlxState
 		Conductor.instance.onMeasure.add(measureHit);
 		Conductor.instance.onBeat.add(beatHit);
 
-		playfield = new Playfield('default', false);
+		playfield = new Playfield('default', song, false);
 		add(playfield);
 
 		startCallback();
@@ -35,28 +37,33 @@ class PlayState extends FlxState
 		super.create();
 	}
 
-	override public function update(elapsed:Float)
-	{
-		if (!startedSong)
-		{
-			if (startedCountdown)
-			{
+	override public function update(elapsed:Float) {
+		if (!startedSong) {
+			if (startedCountdown) {
 				Conductor.instance.time += FlxG.elapsed * 1000;
 				if (Conductor.instance.time > -0)
 					startSong();
 			}
-		}
-		else
+		} else
 			Conductor.instance.time = tracks.get('main').time;
 
 		for (_ in tracks)
 			if (_ != tracks.get('main') && Math.abs(_.time - tracks.get('main').time) > 40)
 				_.time = tracks.get('main').time;
 
+		if (FlxG.keys.justPressed.C) {
+			var fileRef:FileDialog = new FileDialog();
+			fileRef.onOpen.add(function(yes) {
+				var psych:FNFPsych = new FNFPsych().fromJson(yes);
+				var dial:FileReference = new FileReference();
+				dial.save(Bytes.ofString(Json.stringify(Song.fromPsychLegacy(psych))), 'default.json');
+			});
+			fileRef.open('json', null, "Legacy convert/ 0.7.3 psych");
+		}
+
 		super.update(elapsed);
 	}
-	function startSong()
-	{
+	function startSong() {
 		startedSong = true;
 
 		trace(tracks);
@@ -67,12 +74,10 @@ class PlayState extends FlxState
 	public dynamic function startCallback():Void
 		startCountdown();
 
-	public function startCountdown()
-	{
+	public function startCountdown() {
 		startedCountdown = true;
 		tracks.set('main', FlxG.sound.load(Assets.getPreloadPath(song.tracks.main)));
-		for (track_ in song.tracks.extra)
-		{
+		for (track_ in song.tracks.extra) {
 			if (!Assets.exists(Assets.getPreloadPath(track_)))
 				continue;
 			tracks.set(track_, FlxG.sound.load(Assets.getPreloadPath(track_)));

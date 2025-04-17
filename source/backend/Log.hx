@@ -13,7 +13,7 @@ class Log
 	{
 		ogTrace = haxe.Log.trace;
 		haxe.Log.trace = haxeTrace;
-		info('Logger Initialized');
+		prettyPrint('Logger Initialized');
 
 		// lime.app.Application
 		lime.app.Application.current.onExit.add((_) ->
