@@ -28,11 +28,13 @@ class Strum extends FlxSprite
 		animation.addByPrefix('static', '${directions[id]} static', 24, false);
 		animation.addByPrefix('confirm', '${directions[id]} confirm', 24, false);
 		antialiasing = true;
+		playAnim('static');
+		updateHitbox();
 
 		setGraphicSize(width * skin.scaleFactor);
 		updateHitbox();
 
-		playAnim('static');
+
 	}
 
 	public function playAnim(name:String = "static", ?force:Bool = false)

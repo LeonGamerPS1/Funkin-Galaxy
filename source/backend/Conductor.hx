@@ -1,133 +1,187 @@
 package backend;
 
+import lime.app.Event;
+
 /**
- * The conductor class. The definitive conductor class similar to legacy base game's but cooler.
- */
+	The conductor. Steps, beats, and measures use floats because this class was carried over from the original version from fnf zenith.
+	Also, time signature changing math was implemented here.
+	Revamped math by sword_352: https://github.com/Sword352
+**/
 @:publicFields
 class Conductor
 {
-	private var _rawStep(get, default):Float = 0;
-    static var instance:Conductor = new Conductor(102);
+	/**
+		A signal that dispatches every step.
+	**/
+	var onStep:Event<Float->Void> = new Event<Float->Void>();
 
-	inline private function get__rawStep():Float
+	/**
+		A signal that dispatches every beat.
+	**/
+	var onBeat:Event<Float->Void> = new Event<Float->Void>();
+
+	/**
+		A signal that dispatches every measure.
+	**/
+	var onMeasure:Event<Float->Void> = new Event<Float->Void>();
+
+	/**
+		The time of a step.
+	**/
+	var stepCrochet(default, null):Float = 150;
+
+	/**
+		The time of a beat.
+	**/
+	var crochet(default, null):Float = 600;
+
+	/**
+		The time of a measure.
+	**/
+	var measureCrochet(default, null):Float = 2400;
+
+	/**
+		The time measured as the tempo of a song.
+	**/
+	var bpm(default, null):Float = 100;
+
+	/**
+		Whenever the conductor's active.
+	**/
+	var active:Bool;
+
+	/**
+		The conductor's time.
+	**/
+	var time(default, set):Float = 0;
+
+	/**
+		Set the conductor's time.
+	**/
+	function set_time(value:Float):Float
 	{
-		return ((songPosition - offsetTime) / stepCrochet) + offsetStep;
+		time = value;
+
+		var calc = (time - offsetTime);
+		_stepTracker = Math.ffloor(stepOffset + calc / stepCrochet);
+		_beatTracker = Math.ffloor(beatOffset + calc / crochet);
+		_measureTracker = Math.ffloor(measureOffset + calc / measureCrochet);
+
+		if (active)
+		{
+			if (curStep != _stepTracker)
+			{
+				curStep = _stepTracker;
+				onStep.dispatch(curStep);
+			}
+
+			if (curBeat != _beatTracker)
+			{
+				curBeat = _beatTracker;
+				onBeat.dispatch(curBeat);
+			}
+
+			if (curMeasure != _measureTracker)
+			{
+				curMeasure = _measureTracker;
+				onMeasure.dispatch(curMeasure);
+			}
+		}
+		else
+		{
+			curStep = _stepTracker;
+			curBeat = _beatTracker;
+			curMeasure = _measureTracker;
+		}
+
+		return value;
 	}
 
-	private var _stepPos(default, null):Float = 0;
-	private var _beatPos(default, null):Float = 0;
-	private var _measurePos(default, null):Float = 0;
+	/**
+		The step counter.
+	**/
+	var curStep(default, null):Float = 0;
+
+	/**
+		The beat counter.
+	**/
+	var curBeat(default, null):Float = 0;
+
+	/**
+		The measure counter.
+	**/
+	var curMeasure(default, null):Float = 0;
 
 	private var _stepTracker(default, null):Float = 0;
 	private var _beatTracker(default, null):Float = 0;
 	private var _measureTracker(default, null):Float = 0;
 
+	private var stepOffset(default, null):Float = 0;
+	private var beatOffset(default, null):Float = 0;
+	private var measureOffset(default, null):Float = 0;
+
+	/**
+		The time offsetted for bpm changes or time signatures.
+	**/
 	private var offsetTime(default, null):Float = 0;
-	private var offsetStep(default, null):Float = 0;
 
-	var steps(default, set):Int = 4;
+	/**
+		The step count of a beat.
+	**/
+	var numerator:Float = 4;
 
-	inline function set_steps(value:Int):Int
+	/**
+		The beat count of a measure.
+	**/
+	var denominator:Float = 4;
+
+	/**
+		Change the conductor's beats per minute.
+		This also includes time signatures.
+		@param position The position you want to execute the event on.
+		@param newBpm The new beats per minute.
+		@param newNumerator The new steps of the time signature.
+		@param newDenominator The new beats of the time signature.
+	**/
+	inline function changeBpmAt(position:Float, newBpm:Float = 0, newNumerator:Float = 4, newDenominator:Float = 4):Void
 	{
-		return steps = value;
+		var calc = (position - offsetTime);
+		stepOffset += calc / stepCrochet;
+		beatOffset += calc / crochet;
+		measureOffset += calc / measureCrochet;
+		offsetTime = position;
+
+		if (newBpm > 0)
+		{
+			bpm = newBpm;
+			stepCrochet = (15000 / bpm);
+		}
+
+		crochet = stepCrochet * newNumerator;
+		measureCrochet = crochet * newDenominator;
+
+		numerator = newNumerator;
+		denominator = newDenominator;
 	}
 
-	var beats(default, set):Int = 4;
-
-	inline function set_beats(value:Int):Int
-	{
-		return beats = value;
-	}
-
-	function new(initialBpm:Float = 100):Void
-	{
-		bpm = initialBpm;
-	}
-
+	/**
+		Resets the conductor.
+	**/
 	inline function reset():Void
 	{
-		offsetStep = offsetTime = songPosition = 0.0;
-		changeTimeSignature(4, 4);
+		stepOffset = beatOffset = measureOffset = offsetTime = time = 0.0;
+		changeBpmAt(0);
 	}
 
-	inline function changeTimeSignature(newSteps:Int = 4, newBeats:Int = 4):Void
+	static var instance:Conductor = new Conductor();
+
+	/**
+		Constructs a conductor.
+		@param initialBpm The initial beats per minute.
+	**/
+	inline function new(initialBpm:Float = 100, initialNumerator:Float = 4, initialDenominator:Float = 4):Void
 	{
-		crochet = stepCrochet * newSteps;
-		steps = newSteps;
-		beats = newBeats;
+		changeBpmAt(0, initialBpm, initialNumerator, initialDenominator);
+		active = true;
 	}
-
-	var lastBpm(default, null):Float = 100;
-	var bpm(default, set):Float = 100;
-
-	// Ensure that the bpm change executes at the right spot
-
-	inline function executeBpmChange(newBpm:Float, position:Float):Void
-	{
-		offsetStep += (position - offsetTime) / stepCrochet;
-		offsetTime = position;
-		bpm = newBpm;
-	}
-
-	inline function set_bpm(value:Float):Float
-	{
-		lastBpm = bpm;
-		bpm = value;
-
-		stepCrochet = 15000.0 / bpm;
-		crochet = stepCrochet * steps;
-
-		return value;
-	}
-
-	var songPosition(default, set):Float = 0;
-
-	function set_songPosition(value:Float):Float
-	{
-		songPosition = value;
-
-		_stepTracker = Math.ffloor(_rawStep);
-		_beatTracker = Math.ffloor(_stepTracker / steps);
-		_measureTracker = Math.ffloor(_beatTracker / beats);
-
-		if (_stepPos != _stepTracker)
-		{
-			_stepPos = _stepTracker;
-
-			if (onStepHit != null)
-			{
-				onStepHit(_stepPos);
-			}
-		}
-
-		if (_beatPos != _beatTracker)
-		{
-			_beatPos = _beatTracker;
-
-			if (onBeatHit != null)
-			{
-				onBeatHit(_beatPos);
-			}
-		}
-
-		if (_measurePos != _measureTracker)
-		{
-			_measurePos = _measureTracker;
-
-			if (onMeasureHit != null)
-			{
-				onMeasureHit(_measurePos);
-			}
-		}
-
-		return value;
-	}
-
-	var crochet(default, null):Float;
-
-	var stepCrochet(default, null):Float;
-
-	var onStepHit:Float->Void;
-	var onBeatHit:Float->Void;
-	var onMeasureHit:Float->Void;
 }

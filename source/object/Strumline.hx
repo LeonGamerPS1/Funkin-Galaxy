@@ -3,20 +3,28 @@ package object;
 class Strumline extends FlxGroup
 {
 	public var strums:FlxTypedSpriteGroup<Strum>;
+	public var notes:FlxTypedGroup<Note>;
+	public var cpu:Bool = false;
 
-	public function new(x:Float = 0, y:Float = 0, ?skin:Int = 0)
+	public function new(x:Float = 0, y:Float = 0, ?skin:String = 'default')
 	{
 		super();
 
 		strums = new FlxTypedSpriteGroup<Strum>(x, y);
 		add(strums);
 
-		generateStrums();
+		notes = new FlxTypedGroup<Note>();
+		add(notes);
+
+		generateStrums(skin);
 	}
 
 	function generateStrums(skin:String = 'default', i:Int = 4)
 	{
 		for (i in 0...i)
-			strums.add(new Strum(i, skin).applyPosition(strums.x + 160 * NoteSkinConfig.getSkin(skin).scaleFactor * i, strums.y));
+		{
+			var strum = strums.add(new Strum(i, skin));
+			strum.applyPosition(strums.x + ((160 * 0.7) * i), strums.y);
+		}
 	}
 }

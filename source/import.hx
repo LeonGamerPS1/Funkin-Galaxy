@@ -4,7 +4,7 @@ import flixel.*;
 import flixel.graphics.*;
 import flixel.graphics.atlas.*;
 import flixel.graphics.frames.*;
-import flixel.group.*;
+import flixel.group.FlxGroup;
 import flixel.group.FlxSpriteGroup;
 import flixel.math.*;
 import flixel.sound.*;

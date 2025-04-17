@@ -113,8 +113,14 @@ class Assets
 	}
 
 	@:inheritDoc(openfl.Assets.getText)
-	public static inline function getText(path:String)
+	public static function getText(id:String)
 	{
-		return openfl.Assets.getText(path);
+		return openfl.Assets.getText(id);
+	}
+
+	@:inheritDoc(openfl.Assets.getText)
+	public static function exists(id:String)
+	{
+		return openfl.Assets.exists(id);
 	}
 }
