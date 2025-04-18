@@ -28,6 +28,8 @@ class Playfield extends FlxGroup {
 		{
 			_.missSignal.add(onMiss);
 			_.hitSignal.add(onHit);
+			for (gay in _.strums)
+				gay.downScroll = downScroll;
 		}
 
 		songSpeed = song.speed;
