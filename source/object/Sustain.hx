@@ -47,6 +47,7 @@ class Sustain extends TiledSprite {
 		super.update(elapsed);
 	}
 
+
 	public inline function regenPos() {
 		setPosition(parent.x + ((parent.width - width) * 0.5), parent.y + (parent.height * 0.5));
 

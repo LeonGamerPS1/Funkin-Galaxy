@@ -17,6 +17,7 @@ typedef SongMap = {
 
 	var notes:Array<NoteData>;
 	var events:Array<Event>; // events that happen in the song like camera movement, etc
+	@:optional var skin:String;
 }
 
 typedef BPMChange = {

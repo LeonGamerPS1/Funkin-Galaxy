@@ -11,6 +11,8 @@ class Playfield extends FlxGroup {
 
 	public function new(skin:String = 'default', song:SongMap, downScroll:Bool = false) {
 		super();
+		if (song.skin != null && NoteSkinConfig.noteSkins.exists(song.skin))
+			skin = song.skin;
 
 		opponentStrums = new Strumline(50, downScroll ? FlxG.height - 150 : 50, skin);
 		opponentStrums.cpu = true;
@@ -19,18 +21,24 @@ class Playfield extends FlxGroup {
 
 		playerStrums = new Strumline(100 + (FlxG.width / 2), downScroll ? FlxG.height - 150 : 50, skin);
 		add(playerStrums);
+
 		strumlines.push(playerStrums);
 
 		for (_ in strumlines)
+		{
 			_.missSignal.add(onMiss);
+			_.hitSignal.add(onHit);
+		}
 
 		songSpeed = song.speed;
 		generateNotes(song, skin);
 	}
 
-	function onMiss(note:Note) {
+	function onMiss(note:Note, miss:Int)
+	{
 		trace('missed note');
 	}
+	function onHit(note:Note) {}
 
 	function generateNotes(song:SongMap, ?skin:String = "default") {
 		song.notes.sort((one, two) -> return Math.floor(one.time - two.time));
@@ -50,6 +58,7 @@ class Playfield extends FlxGroup {
 			}
 		}
 	}
+
 
 	function set_songSpeed(value:Float):Float {
 		var prev = songSpeed;

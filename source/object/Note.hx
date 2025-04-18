@@ -79,6 +79,7 @@ class Note extends FlxSprite
 		setPosition(x, y);
 		return this;
 	}
+
 	public var strumline:Strumline; // mainly used for hit stuff
 	public var sustainHit:Bool = false;
 
@@ -92,6 +93,14 @@ class Note extends FlxSprite
 		{
 			if (noteData.time <= Conductor.instance.time)
 				wasGoodHit = true;
+		}
+		else
+		{
+			if (noteData.time > Conductor.instance.time - Conductor.safeZoneOffset
+				&& noteData.time < Conductor.instance.time + (Conductor.safeZoneOffset * 0.5))
+				inHitZone = true;
+			else
+				inHitZone = false;
 		}
 	}
 }
