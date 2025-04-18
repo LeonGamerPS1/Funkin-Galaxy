@@ -16,12 +16,13 @@ class PlayState extends FlxState
 
 	public static var song:SongMap;
 
-	public var camHUD:FlxCamera = new FlxCamera();
+	public var camHUD:FunkinCamera = new FunkinCamera("hud");
 
 	override public function create()
 	{
 		if (song == null)
 			song = Song.grabSong('Duality');
+		FlxG.cameras.reset(new FunkinCamera("play"));
 		camHUD.bgColor.alpha = 0;
 		FlxG.cameras.add(camHUD, false);
 
