@@ -1,5 +1,6 @@
 {
   "name": "default",
   "scaleFactor": 0.7,
-  "image": "noteSkins/note"
+  "image": "noteSkins/note",
+  "antialiasing":true
 }

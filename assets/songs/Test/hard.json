@@ -3845,13 +3845,14 @@
         }
     ],
     "players": [
-        "bf-pixel-opponent",
-        null,
-        "bf"
+        "bf",
+        "gf",
+        "bf-pixel"
     ],
     "songName": "Test",
     "speed": 1.6,
     "stage": null,
+    "skinEnemy":"pixel",
     "tracks": {
         "extra": [
             "songs/Test/Voices.ogg"

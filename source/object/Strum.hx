@@ -24,7 +24,7 @@ class Strum extends FlxSprite {
 		animation.addByPrefix('static', '${directions[id]} static', 24, false);
 		animation.addByPrefix('confirm', '${directions[id]} confirm', 24, false);
 		animation.addByPrefix('press', '${directions[id]} press', 24, false);
-		antialiasing = true;
+		antialiasing = skin.antialiasing;
 		playAnim('static');
 		updateHitbox();
 

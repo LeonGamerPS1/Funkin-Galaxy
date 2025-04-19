@@ -1,6 +1,7 @@
 package;
 
 import backend.Song.SongMap;
+import backend.controls.Controls;
 import haxe.io.Bytes;
 import lime.ui.FileDialog;
 import moonchart.formats.fnf.legacy.FNFPsych;
@@ -18,10 +19,22 @@ class PlayState extends FlxState
 
 	public var camHUD:FunkinCamera = new FunkinCamera("hud");
 
+	public var BF_X:Float = 770;
+	public var BF_Y:Float = 100;
+	public var DAD_X:Float = 100;
+	public var DAD_Y:Float = 100;
+	public var GF_X:Float = 400;
+	public var GF_Y:Float = 130;
+
+	public var gf:Character;
+	public var bf:Character;
+	public var dad:Character;
+
 	override public function create()
 	{
 		if (song == null)
-			song = Song.grabSong('Duality');
+			song = Song.grabSong();
+
 		FlxG.cameras.reset(new FunkinCamera("play"));
 		camHUD.bgColor.alpha = 0;
 		FlxG.cameras.add(camHUD, false);
@@ -36,13 +49,46 @@ class PlayState extends FlxState
 		Conductor.instance.onMeasure.add(measureHit);
 		Conductor.instance.onBeat.add(beatHit);
 
+		initChars();
+
 		playfield = new Playfield('default', song, false);
 		playfield.cameras = [camHUD];
 		add(playfield);
+		for (value in playfield.strumlines)
+		{
+			value.character = !value.cpu ? bf : dad;
+		}
 
 		startCallback();
 
 		super.create();
+	}
+
+	public var boyfriendCameraOffset:Array<Float> = [0, 0];
+	public var opponentCameraOffset:Array<Float> = [0, 0];
+	public var girlfriendCameraOffset:Array<Float> = [0, 0];
+
+	function initChars()
+	{
+		dad = new Character(song.players[0]);
+		gf = new Character(song.players[1]);
+		bf = new Character(song.players[2], true);
+
+		bf.setPosition(BF_X, BF_Y);
+		gf.setPosition(GF_X, GF_Y);
+		dad.setPosition(DAD_X, DAD_Y);
+
+		for (_ in [dad, gf, bf])
+			startChar(_);
+
+		add(gf);
+		add(dad);
+		add(bf);
+	}
+
+	function startChar(char:Character)
+	{
+		char.setPosition(char.x + char.json.position[0], char.y + char.json.position[1]);
 	}
 
 	override public function update(elapsed:Float)
@@ -80,6 +126,7 @@ class PlayState extends FlxState
 
 		super.update(elapsed);
 	}
+
 	public var defaultZoom:Float = 1;
 
 	function startSong()
@@ -106,7 +153,14 @@ class PlayState extends FlxState
 		}
 	}
 
-	public function beatHit(curBeat:Float) {}
+	public function beatHit(curBeat:Float)
+	{
+		if (gf != null
+			&& Math.floor(curBeat) % Math.round(1 * gf.danceEveryNumBeats) == 0
+			&& !gf.getAnimationName().startsWith('sing')
+			&& !gf.stunned)
+			gf.dance();
+	}
 
 	public function measureHit(curBeat:Float)
 	{

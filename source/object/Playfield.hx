@@ -2,23 +2,29 @@ package object;
 
 import backend.Song.SongMap;
 
-class Playfield extends FlxGroup {
+class Playfield extends FlxGroup
+{
 	var playerStrums:Strumline;
 	var opponentStrums:Strumline;
 
 	public var strumlines:Array<Strumline> = [];
 	public var songSpeed(default, set):Float = 1;
 
-	public function new(skin:String = 'default', song:SongMap, downScroll:Bool = false) {
+	public function new(skin:String = 'default', song:SongMap, downScroll:Bool = false)
+	{
 		super();
-		if (song.skin != null && NoteSkinConfig.noteSkins.exists(song.skin))
-			skin = song.skin;
+		var last = skin;
+		if (song.skinEnemy != null)
+			skin = song.skinEnemy;
 
-		opponentStrums = new Strumline(50, downScroll ? FlxG.height - 150 : 50, skin);
+		opponentStrums = new Strumline(50, downScroll ? FlxG.height - 150 : 50, song.skinEnemy);
 		opponentStrums.cpu = true;
 		add(opponentStrums);
 		strumlines.push(opponentStrums);
 
+		skin = last;
+		if (song.skinPlayer != null)
+			skin = song.skinPlayer;
 		playerStrums = new Strumline(100 + (FlxG.width / 2), downScroll ? FlxG.height - 150 : 50, skin);
 		add(playerStrums);
 
@@ -33,36 +39,42 @@ class Playfield extends FlxGroup {
 		}
 
 		songSpeed = song.speed;
-		generateNotes(song, skin);
+		generateNotes(song);
 	}
 
-	function onMiss(note:Note, miss:Int)
+	dynamic public function onMiss(note:Note, miss:Int)
 	{
 		trace('missed note');
 	}
-	function onHit(note:Note) {}
+	dynamic public function onHit(note:Note)
+	{
+		var strumline = note.strumline;
+		strumline.character.confirmAnimation(note, !note.sustainHit);
+	}
 
-	function generateNotes(song:SongMap, ?skin:String = "default") {
+	function generateNotes(song:SongMap)
+	{
 		song.notes.sort((one, two) -> return Math.floor(one.time - two.time));
-		for (note in song.notes) {
+		for (note in song.notes)
+		{
 			if (strumlines[note.strumLine] == null)
 				continue;
-			var noteObject:Note = new Note(note, skin);
+			var noteObject:Note = new Note(note, strumlines[note.strumLine].strums.members[note.data].skin.name);
 			strumlines[note.strumLine].unspawnNotes.push(noteObject);
 			noteObject.strumline = strumlines[note.strumLine];
 
-			if (note.length > 0) {
+			if (note.length > 0)
+			{
 				noteObject.sustain = new Sustain(noteObject);
 				@:privateAccess
 				noteObject.sustain.parent = noteObject;
-
 				noteObject.strumline.sustains.add(noteObject.sustain);
 			}
 		}
 	}
 
-
-	function set_songSpeed(value:Float):Float {
+	function set_songSpeed(value:Float):Float
+	{
 		var prev = songSpeed;
 		songSpeed = value;
 

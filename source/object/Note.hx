@@ -33,7 +33,7 @@ class Note extends FlxSprite
 		animation.addByPrefix('hold', '${Strum.directions[noteData.data]} hold piece0', 24, false);
 		animation.addByPrefix('end', '${Strum.directions[noteData.data]} hold end0', 24, false);
 
-		antialiasing = true;
+		antialiasing = skin.antialiasing;
 		playAnim('static');
 		updateHitbox();
 

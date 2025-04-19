@@ -11,6 +11,7 @@ class Strumline extends FlxGroup
 	public var sustains:FlxTypedGroup<Sustain>;
 
 	public var cpu:Bool = false;
+	public var character:Character;
 
 	public function new(x:Float = 0, y:Float = 0, ?skin:String = 'default')
 	{
@@ -25,7 +26,14 @@ class Strumline extends FlxGroup
 		notes = new FlxTypedGroup<Note>();
 		add(notes);
 
+		hitSignal.add((note) ->
+		{
+			if (character != null)
+				character.confirmAnimation(note, !note.sustainHit);
+		});
+
 		generateStrums(skin);
+		Conductor.instance.onBeat.add(beat);
 	}
 
 	function generateStrums(skin:String = 'default', i:Int = 4)
@@ -177,6 +185,9 @@ class Strumline extends FlxGroup
 			}
 		}
 
+		if (!holding.contains(true))
+			playerDance();
+
 		// Handle actual keypress hit detection
 		if (pressed.indexOf(true) != -1)
 		{
@@ -205,6 +216,7 @@ class Strumline extends FlxGroup
 		strum.playAnim('confirm');
 		hitSignal.dispatch(note);
 		note.wasGoodHit = true;
+		note.sustainHit = true;
 
 		if (note.noteData.time + note.noteData.length < Conductor.instance.time && note.wasGoodHit)
 		{
@@ -212,5 +224,36 @@ class Strumline extends FlxGroup
 				strum.playAnim('static');
 			destroyNote(note);
 		}
+	}
+	public function beat(e:Float)
+	{
+		characterBopper(Math.floor(e));
+	}
+
+	inline public function characterBopper(beat:Int):Void
+	{
+		switch (character.dancer)
+		{
+			case false:
+				if (character != null
+					&& beat % character.danceEveryNumBeats == 0
+					&& !character.getAnimationName().startsWith('sing')
+					&& !character.stunned)
+					character.dance();
+			case true:
+				if (character != null
+					&& beat % Math.round(1 * character.danceEveryNumBeats) == 0
+					&& !character.getAnimationName().startsWith('sing')
+					&& !character.stunned)
+					character.dance();
+		}
+	}
+
+	inline public function playerDance():Void
+	{
+		var anim:String = character.getAnimationName();
+		if (character.holdTimer > Conductor.instance.stepCrochet * (0.0011 #if FLX_PITCH / FlxG.timeScale #end) * character.singDuration
+			&& anim.startsWith('sing'))
+			character.dance();
 	}
 }

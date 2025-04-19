@@ -7,6 +7,7 @@ typedef NoteSkinData =
 	var image:String;
 	var scaleFactor:Float;
 	var name:String;
+	@:optional var antialiasing:Bool;
 }
 
 class NoteSkinConfig
@@ -44,7 +45,8 @@ class NoteSkinConfig
 		return {
 			image: "noteSkins/note",
 			scaleFactor: 0.7,
-			name: "Default"
+			name: "Default",
+			antialiasing: true
 		};
 	}
 }
