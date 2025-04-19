@@ -48,7 +48,7 @@ class Assets
 
 		if (openfl.Assets.exists(path, IMAGE))
 		{
-			var image:FlxGraphic = FlxGraphic.fromBitmapData(openfl.Assets.getBitmapData(path));
+			var image:FlxGraphic = FlxG.bitmap.add(path);
 			image.bitmap.disposeImage();
 			images.set(path, image);
 

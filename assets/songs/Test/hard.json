@@ -3845,9 +3845,9 @@
         }
     ],
     "players": [
-        "bf",
+        "bf-pixel",
         "gf",
-        "bf-pixel"
+        "bf"
     ],
     "songName": "Test",
     "speed": 1.6,

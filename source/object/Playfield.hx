@@ -1,6 +1,8 @@
 package object;
 
 import backend.Song.SongMap;
+import flixel.text.FlxText;
+import flixel.util.FlxStringUtil;
 
 class Playfield extends FlxGroup
 {
@@ -9,6 +11,13 @@ class Playfield extends FlxGroup
 
 	public var strumlines:Array<Strumline> = [];
 	public var songSpeed(default, set):Float = 1;
+	public var healthBar:Bar;
+	public var health:Float = 1;
+
+	public var iconP1:FlxTypedSpriteGroup<HealthIcon>;
+	public var iconP2:FlxTypedSpriteGroup<HealthIcon>;
+	public var scoreText:FlxText;
+	public var score:Float = 0;
 
 	public function new(skin:String = 'default', song:SongMap, downScroll:Bool = false)
 	{
@@ -17,7 +26,7 @@ class Playfield extends FlxGroup
 		if (song.skinEnemy != null)
 			skin = song.skinEnemy;
 
-		opponentStrums = new Strumline(50, downScroll ? FlxG.height - 150 : 50, song.skinEnemy);
+		opponentStrums = new Strumline(50, downScroll ? FlxG.height - 150 : 50, skin);
 		opponentStrums.cpu = true;
 		add(opponentStrums);
 		strumlines.push(opponentStrums);
@@ -25,10 +34,24 @@ class Playfield extends FlxGroup
 		skin = last;
 		if (song.skinPlayer != null)
 			skin = song.skinPlayer;
-		playerStrums = new Strumline(100 + (FlxG.width / 2), downScroll ? FlxG.height - 150 : 50, skin);
+		playerStrums = new Strumline(100 + (FlxG.width / 2), downScroll ? FlxG.height - 150 : 50, skin,);
 		add(playerStrums);
 
 		strumlines.push(playerStrums);
+
+		healthBar = new Bar(0, !downScroll ? FlxG.height - 80 : FlxG.height * 0.09, 'healthBar', () -> return health, 0, 2);
+		healthBar.screenCenter(X);
+		add(healthBar);
+
+		scoreText = new FlxText(healthBar.x + healthBar.width - 190, healthBar.y + 30, 0, 'Score: 0', 20);
+		scoreText.setFormat(Assets.font('vcr.ttf'), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		scoreText.scrollFactor.set();
+		add(scoreText);
+
+		iconP1 = new FlxTypedSpriteGroup<HealthIcon>();
+		iconP2 = new FlxTypedSpriteGroup<HealthIcon>();
+		add(iconP2);
+		add(iconP1);
 
 		for (_ in strumlines)
 		{
@@ -42,14 +65,32 @@ class Playfield extends FlxGroup
 		generateNotes(song);
 	}
 
+	public function addIcon(id:String = 'dad', ?player:Bool = false)
+	{
+		var icon = new HealthIcon(id, player);
+		var group = player ? iconP1 : iconP2;
+		group.add(icon);
+		group.origin.set(group.origin.x, group.origin.y);
+	}
+
 	dynamic public function onMiss(note:Note, miss:Int)
 	{
-		trace('missed note');
+		health -= 0.05;
+		score -= 150;
 	}
-	dynamic public function onHit(note:Note)
+	public function onHit(note:Note)
 	{
 		var strumline = note.strumline;
 		strumline.character.confirmAnimation(note, !note.sustainHit);
+		if (!note.wasGoodHit && note.strumline.cpu == false)
+		{
+			health += 0.05;
+			var timing:Float = Math.abs(Conductor.instance.time - note.noteData.time);
+			var quantizedTiming:Float = Math.floor(timing * 5) / 5;
+			var ratio:Float = 1 - (quantizedTiming / Conductor.safeZoneOffset);
+
+			score += Math.floor(350 * ratio);
+		}
 	}
 
 	function generateNotes(song:SongMap)
@@ -83,5 +124,40 @@ class Playfield extends FlxGroup
 				_.songSpeed = value;
 
 		return songSpeed = value;
+	}
+	public override function update(elapsed:Float)
+	{
+		scoreText.text = 'Score: ' + FlxStringUtil.formatMoney(score, true, false).replace(',00', ''); // because i dont want ,00
+		iconP1.x = healthBar.barCenter + (150) - 150 - 24;
+		iconP2.x = healthBar.barCenter - (150 * iconP2.scale.x);
+		iconP1.y = healthBar.y - (iconP1.height / 2);
+		iconP2.y = healthBar.y - (iconP2.height / 2);
+		for (icon in iconP1)
+		{
+			var i = iconP1.members.indexOf(icon);
+			icon.setPosition(iconP1.x + ((i < 1 ? 150 : 70) * i));
+			icon.y = iconP1.y;
+			if (healthBar.percent > 80)
+				icon.animation.curAnim.curFrame = icon.winningIconFrame;
+			else if (healthBar.percent < 20)
+				icon.animation.curAnim.curFrame = 1;
+			else
+				icon.animation.curAnim.curFrame = 0;
+		}
+
+		for (icon in iconP2)
+		{
+			var i = iconP2.members.indexOf(icon);
+			icon.setPosition(iconP2.x - ((i < 1 ? 150 : 70) * i));
+
+			icon.y = iconP2.y;
+			if (healthBar.percent > 80)
+				icon.animation.curAnim.curFrame = 1;
+			else if (healthBar.percent < 20)
+				icon.animation.curAnim.curFrame = icon.winningIconFrame;
+			else
+				icon.animation.curAnim.curFrame = 0;
+		}
+		super.update(elapsed);
 	}
 }

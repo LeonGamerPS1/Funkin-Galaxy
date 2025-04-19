@@ -8,8 +8,12 @@ import flixel.group.FlxGroup;
 import flixel.group.FlxSpriteGroup;
 import flixel.math.*;
 import flixel.sound.*;
+import flixel.tweens.*;
+import flixel.ui.FlxBar;
+import flixel.util.FlxColor;
 import haxe.Json;
 import object.*;
+import object.stages.*;
 import sys.FileSystem;
 import sys.io.File;
 

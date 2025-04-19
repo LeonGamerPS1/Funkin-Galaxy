@@ -17,11 +17,11 @@ class Strumline extends FlxGroup
 	{
 		super();
 
-		sustains = new FlxTypedGroup<Sustain>();
-		add(sustains);
-
 		strums = new FlxTypedSpriteGroup<Strum>(x, y);
 		add(strums);
+
+		sustains = new FlxTypedGroup<Sustain>();
+		add(sustains);
 
 		notes = new FlxTypedGroup<Note>();
 		add(notes);
@@ -225,6 +225,7 @@ class Strumline extends FlxGroup
 			destroyNote(note);
 		}
 	}
+
 	public function beat(e:Float)
 	{
 		characterBopper(Math.floor(e));
