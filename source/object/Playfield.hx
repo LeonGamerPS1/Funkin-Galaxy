@@ -75,7 +75,7 @@ class Playfield extends FlxGroup
 	{
 		health -= 0.05;
 		score -= 150;
-		note.strumline.character.singAnimation(note, !note.sustainHit, true);
+		note.strumline.character.singAnimation(note, true, true);
 	}
 
 	public function onHit(note:Note)
