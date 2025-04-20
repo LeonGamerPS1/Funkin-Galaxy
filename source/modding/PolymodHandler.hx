@@ -6,23 +6,7 @@ import polymod.fs.ZipFileSystem;
 
 class PolymodHandler
 {
-	static final MOD_FOLDER:String =
-		#if (REDIRECT_ASSETS_FOLDER && macos)
-		'../../../../../../../example_mods'
-		#elseif REDIRECT_ASSETS_FOLDER
-		'../../../../example_mods'
-		#else
-		'mods'
-		#end;
-
-	static final CORE_FOLDER:Null<String> =
-		#if (REDIRECT_ASSETS_FOLDER && macos)
-		'../../../../../../../assets'
-		#elseif REDIRECT_ASSETS_FOLDER
-		'../../../../assets'
-		#else
-		null
-		#end;
+	static final MOD_FOLDER_NAME:String = 'mods';
 
 	public static var loadedMods:Array<ModMetadata> = [];
 
@@ -33,15 +17,15 @@ class PolymodHandler
 	{
 		#if (!android)
 		#if sys // fix for crash on sys platforms
-		if (!sys.FileSystem.exists('./mods'))
-			sys.FileSystem.createDirectory('./mods');
+		if (!sys.FileSystem.exists('./${MOD_FOLDER_NAME}'))
+			sys.FileSystem.createDirectory('./${MOD_FOLDER_NAME}');
 		#end
 		var dirs:Array<String> = [];
-		var polyMods = Polymod.scan({modRoot: './mods/'});
+		var polyMods = Polymod.scan({modRoot: './${MOD_FOLDER_NAME}/'});
 		for (i in 0...polyMods.length)
 		{
 			var value = polyMods[i];
-			dirs.push(value.modPath.split("./mods/")[1]);
+			dirs.push(value.modPath.split('./${MOD_FOLDER_NAME}/d')[1]);
 			loadedMods.push(value);
 		}
 		framework ??= FLIXEL;
@@ -110,7 +94,7 @@ class PolymodHandler
 
 		Polymod.init({
 			framework: framework,
-			modRoot: "./mods/",
+			modRoot: './${MOD_FOLDER_NAME}/',
 			dirs: dirs,
 			parseRules: buildParseRules(),
 			errorCallback: function(err:PolymodError)
@@ -126,8 +110,8 @@ class PolymodHandler
 
 	public static function createModRoot():Void
 	{
-		if (!FileSystem.exists('./mods/'))
-			FileSystem.createDirectory('./mods/');
+		if (!FileSystem.exists('./${MOD_FOLDER_NAME}/'))
+			FileSystem.createDirectory('./${MOD_FOLDER_NAME}/');
 	}
 
 	static function buildParseRules():polymod.format.ParseRules
