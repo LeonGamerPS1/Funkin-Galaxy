@@ -84,7 +84,7 @@ class Assets
 	{
 		final lib = openfl.utils.Assets.getLibrary('default');
 		final list:Array<String> = lib.list(type);
-		path = 'assets/$path';
+		path = getAssetPath(path);
 		var stringList:Array<String> = [];
 		for (hmm in list)
 		{
