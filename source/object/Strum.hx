@@ -10,7 +10,6 @@ class Strum extends FlxSprite {
 	{
 		super();
 		this.id = id;
-		trace(id);
 		this.skin = NoteSkinConfig.getSkin(skin);
 
 		applySkin();
