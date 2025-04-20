@@ -71,7 +71,7 @@ class TiledSprite extends FlxSprite {
 		var anim:FlxAnimation = this.animation.getByName(animation);
 
 		if (anim == null) {
-			FlxG.log.warn('TiledSprite: Could not find tail animation '${animation} '!');
+			FlxG.log.warn('TiledSprite: Could not find tail animation "${animation}"!');
 			_tailFrame = null;
 			return;
 		}
