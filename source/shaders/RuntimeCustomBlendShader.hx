@@ -19,12 +19,12 @@ class RuntimeCustomBlendShader extends RuntimePostEffectShader
 
   function set_blendSwag(value:BlendMode):BlendMode
   {
-    this.setInt("blendMode", cast value);
+		this.setInt('blendMode', cast value);
     return blendSwag = value;
   }
 
   public function new()
   {
-    super(Assets.getText("assets/shaders/customBlend.frag"));
+		super(Assets.getText('assets/shaders/customBlend.frag'));
   }
 }

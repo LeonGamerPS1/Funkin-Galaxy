@@ -80,7 +80,7 @@ class Assets
 		return getSparrowAtlas(key);
 	}
 
-	public static function readAssetsDirectoryFromLibrary(path:String, ?type:String, ?suffix:String = "", ?removePath:Bool = false):Array<String>
+	public static function readAssetsDirectoryFromLibrary(path:String, ?type:String, ?suffix:String = '', ?removePath:Bool = false):Array<String>
 	{
 		final lib = openfl.utils.Assets.getLibrary('default');
 		final list:Array<String> = lib.list(type);

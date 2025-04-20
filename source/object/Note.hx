@@ -11,7 +11,7 @@ class Note extends FlxSprite
 	public var inHitZone:Bool = false;
 	public var sustainAngle:Float = 90;
 
-	public function new(noteData:NoteData, ?skin:String = "default")
+	public function new(noteData:NoteData, ?skin:String = 'default')
 	{
 		super(0, -6000);
 		this.noteData = noteData;
@@ -66,7 +66,7 @@ class Note extends FlxSprite
 		flipSustain = strum.downScroll;
 	}
 
-	public function playAnim(name:String = "static", ?force:Bool = false)
+	public function playAnim(name:String = 'static', ?force:Bool = false)
 	{
 		animation.play(name, force);
 

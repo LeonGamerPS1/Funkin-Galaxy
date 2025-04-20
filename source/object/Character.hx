@@ -43,17 +43,17 @@ class Character extends FlxSprite
 	public var json:CharacterData;
 	public var dancer(default, default):Bool = false;
 	public var isPlayer:Bool = false;
-	public var curCharacter:String = "bf";
+	public var curCharacter:String = 'bf';
 	public var animationNotes:Array<Dynamic> = [];
 	public var danceIdle:Bool = false;
-	public var idleSuffix:String = "";
+	public var idleSuffix:String = '';
 	public var stunned:Bool = false;
 
 	public var position:Array<Float> = [0, 0];
 	public var camera_position:Array<Float> = [0, 0];
 	public var health_colors:Array<Int> = [0, 0, 0];
 
-	public function new(charName:String = "dad", isPlayer:Bool = false)
+	public function new(charName:String = 'dad', isPlayer:Bool = false)
 	{
 		super(0, 0);
 		this.isPlayer = isPlayer;
@@ -94,7 +94,7 @@ class Character extends FlxSprite
 	public function recalculateDanceIdle()
 	{
 		var lastDanceIdle:Bool = danceIdle;
-		danceIdle = (hasAnimation('danceLeft' + idleSuffix) && hasAnimation('danceRight' + idleSuffix));
+		danceIdle = (hasAnimation('danceLeft$idleSuffix') && hasAnimation('danceRight$idleSuffix'));
 
 		if (settingCharacterUp)
 		{
@@ -113,7 +113,7 @@ class Character extends FlxSprite
 		settingCharacterUp = false;
 	}
 
-	function loadTexture(s:String = "")
+	function loadTexture(s:String = '')
 	{
 		var tex = Assets.getAtlas(s);
 		frames = tex;
@@ -143,7 +143,7 @@ class Character extends FlxSprite
 		{
 			var animationMeta = json.animations[i];
 			if (animationMeta.indices != null && animationMeta.indices.length > 0)
-				animation.addByIndices(animationMeta.name, animationMeta.prefix, animationMeta.indices, "",
+				animation.addByIndices(animationMeta.name, animationMeta.prefix, animationMeta.indices, '',
 					animationMeta.fps != null ? animationMeta.fps : 24, animationMeta.looped);
 			else
 				animation.addByPrefix(animationMeta.name, animationMeta.prefix, animationMeta.fps, animationMeta.looped);
@@ -253,7 +253,7 @@ class Character extends FlxSprite
 						noteData = 3;
 
 					noteData += FlxG.random.int(0, 1);
-					playAnim('shoot' + noteData, true);
+					playAnim('shoot$noteData', true);
 					animationNotes.shift();
 				}
 				if (isAnimationFinished())
@@ -279,7 +279,7 @@ class Character extends FlxSprite
 		super.update(elapsed);
 	}
 
-	public static var singAnimations = ["singLEFT", "singDOWN", "singUP", "singRIGHT"];
+	public static var singAnimations = ['singLEFT', 'singDOWN', 'singUP', 'singRIGHT'];
 
 	public function confirmAnimation(note:Note, ?playAnim:Bool = true)
 	{

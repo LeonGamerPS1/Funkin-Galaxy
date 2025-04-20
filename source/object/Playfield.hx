@@ -129,7 +129,7 @@ class Playfield extends FlxGroup
 
 	public override function update(elapsed:Float)
 	{
-		scoreText.text = 'Score: ' + FlxStringUtil.formatMoney(score, true, false).replace(',00', ''); // because i dont want ,00
+		scoreText.text = 'Score: ${FlxStringUtil.formatMoney(score, true, false).replace(',00', '')}'; // because i dont want ,00
 		iconP1.x = healthBar.barCenter + (150) - 150 - 24;
 		iconP2.x = healthBar.barCenter - (150 * iconP2.scale.x);
 		iconP1.y = healthBar.y - (iconP1.height / 2);

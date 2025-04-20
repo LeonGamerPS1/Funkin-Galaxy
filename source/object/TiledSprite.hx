@@ -17,7 +17,7 @@ using flixel.util.FlxColorTransformUtil;
  * - Implement a better tile gap fix
  * - Implement a better way to check for offscreen tiles + downscroll support
  * - Add support for `renderBlit` mode
- * - Figure out why `set_angle` is "recursive"
+ * - Figure out why `set_angle` is 'recursive'
  */
 /**
  * A sprite object able to repeat a frame vertically.
@@ -71,7 +71,7 @@ class TiledSprite extends FlxSprite {
 		var anim:FlxAnimation = this.animation.getByName(animation);
 
 		if (anim == null) {
-			FlxG.log.warn('TiledSprite: Could not find tail animation "${animation}"!');
+			FlxG.log.warn('TiledSprite: Could not find tail animation '${animation} '!');
 			_tailFrame = null;
 			return;
 		}
