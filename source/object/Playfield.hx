@@ -75,6 +75,7 @@ class Playfield extends FlxGroup
 	{
 		health -= 0.05;
 		score -= 150;
+		PlayState.instance.bf.playAnim('singDOWNmiss');
 	}
 
 	public function onHit(note:Note)
