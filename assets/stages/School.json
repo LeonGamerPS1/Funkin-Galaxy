@@ -7,7 +7,7 @@
     "cam_bf": [-100, -100], 
     "cam_gf": [0,0], 
   
-    "isPixel": true, 
+    "skin": "pixel", 
   
     "defaultCamZoom": 1.05 
   }
