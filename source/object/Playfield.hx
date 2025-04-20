@@ -22,7 +22,8 @@ class Playfield extends FlxGroup
 	public function new(skin:String = 'default', song:SongMap, downScroll:Bool = false)
 	{
 		super();
-		var last = skin;
+		if (PlayState.instance != null)
+			skin = PlayState.instance.stageJson.skin;
 		var enemySkin = song.skinEnemy ?? skin;
 		var playerSkin = song.skinPlayer ?? skin;
 
