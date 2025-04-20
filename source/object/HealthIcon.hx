@@ -31,16 +31,16 @@ class HealthIcon extends FlxSprite
 		{
 			if (animation.getByName(newChar) == null)
 			{
-				var path = "icons/icon-" + newChar;
-				if (!Assets.exists(Assets.getPreloadPath('images/icons/icon-$newChar.png')))
-					path = "icons/icon-questionmark";
+				var path = 'icons/icon-$newChar';
+				if (!Assets.exists(Assets.getAssetPath('images/$path.png')))
+					path = 'icons/icon-questionmark';
 
 				loadGraphic(Assets.image(path));
 				var frames:Array<Int> = [];
 
 				for (i in 0...Math.floor(width / 150))
 					frames.push(i);
-				trace(frames.length + ' frames found for icon $newChar');
+				trace('${frames.length} frames found for icon $newChar');
 
 				if (frames.contains(2))
 					winningIconFrame = 2; // actually the third frame but haxe shitty starts array stuff at 0 iirc

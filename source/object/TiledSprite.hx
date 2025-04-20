@@ -17,7 +17,7 @@ using flixel.util.FlxColorTransformUtil;
  * - Implement a better tile gap fix
  * - Implement a better way to check for offscreen tiles + downscroll support
  * - Add support for `renderBlit` mode
- * - Figure out why `set_angle` is "recursive"
+ * - Figure out why `set_angle` is 'recursive'
  */
 /**
  * A sprite object able to repeat a frame vertically.

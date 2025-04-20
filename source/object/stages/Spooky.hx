@@ -14,7 +14,7 @@ class Spooky extends BaseStage
 
 		add(halloweenBG);
 
-		if (PlayState.isStoryMode && PlayState.song.songName == "monster")
+		if (PlayState.isStoryMode && PlayState.song.songName == 'monster')
 			setStartCallback(monsterCutscene);
 	}
 

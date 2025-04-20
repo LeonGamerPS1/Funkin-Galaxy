@@ -51,29 +51,32 @@ typedef Event = {
 class Song {
 	private static var _cache(default, null):Map<String, SongMap> = new Map<String, SongMap>();
 
-	public static function grabSong(songID:String = "Duality", jsonName:String = "hard"):SongMap
+	public static function grabSong(songID:String = 'Duality', jsonName:String = 'hard'):SongMap
 	{
-		var id:String = songID + '-$jsonName';
+		final songPath:String = Assets.getAssetPath('songs/$songID/$jsonName.json');
+
+		var id:String = '$songID-$jsonName';
 		if (_cache.exists(id))
 			return Reflect.copy(_cache.get(id));
-		if (Assets.exists('assets/songs/$songID/$jsonName.json')) {
-			var json = Json.parse(Assets.getText('assets/songs/$songID/$jsonName.json'));
+		if (Assets.exists(songPath))
+		{
+			var json = Json.parse(Assets.getText(songPath));
 			_cache.set(id, json);
 
 			return Reflect.copy(json);
 		}
 		return {
-			displayName: "Unknown",
-			players: ["dead", "dead", "dead"],
-			songName: "UK",
+			displayName: 'Unknown',
+			players: ['dead', 'dead', 'dead'],
+			songName: 'UK',
 			speed: 2.3,
 			bpm: 180,
-			composer: "VOID",
-			charter: "empty",
-			tracks: {main: "music/poop.ogg"},
+			composer: 'VOID',
+			charter: 'empty',
+			tracks: {main: 'music/poop.ogg'},
 			notes: [],
 			bpmMap: [],
-			stage: "",
+			stage: '',
 			events: []
 		};
 	}
@@ -124,7 +127,7 @@ class Song {
 
 			output.events.push({
 				time: sectionTime,
-				name: "Camera Focus",
+				name: 'Camera Focus',
 				values: [section.mustHitSection ? 'bf' : 'dad']
 			});
 

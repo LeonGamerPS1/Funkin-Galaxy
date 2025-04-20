@@ -6,16 +6,16 @@ class Strum extends FlxSprite {
 	public var downScroll:Bool = false;
 	public var strumline:Strumline; // only for stuff. bitch
 
-	public function new(id:Int = 0, ?skin:String = "default") {
+	public function new(id:Int = 0, ?skin:String = 'default')
+	{
 		super();
 		this.id = id;
-		trace(id);
 		this.skin = NoteSkinConfig.getSkin(skin);
 
 		applySkin();
 	}
 
-	public static var directions:Array<String> = ["left", "down", "up", "right"];
+	public static var directions:Array<String> = ['left', 'down', 'up', 'right'];
 
 	public function applySkin() {
 		var img = Assets.getAtlas(skin.image);
@@ -32,7 +32,8 @@ class Strum extends FlxSprite {
 		updateHitbox();
 	}
 
-	public function playAnim(name:String = "static", ?force:Bool = false) {
+	public function playAnim(name:String = 'static', ?force:Bool = false)
+	{
 		animation.play(name, force);
 
 		centerOffsets();

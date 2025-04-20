@@ -45,24 +45,24 @@ class Log
 
 	@:keep static inline function print(value:Dynamic, level:String, color:Int, ?pos:PosInfos):Void
 	{
-		var msg = '${ansi(33)}[${ansi(45)}${DateTools.format(Date.now(), '%H:%M:%S')} - ${ansi(255)}${pos.fileName.replace("source/", "")}:${pos.lineNumber}${ansi(33)}]';
+		var msg = '${ansi(33)}[${ansi(45)}${DateTools.format(Date.now(), '%H:%M:%S')} - ${ansi(255)}${pos.fileName.replace('source/', '')}:${pos.lineNumber}${ansi(33)}]';
 		Sys.println(msg = '${msg.rpad(' ', 90)}${ansi(color)}$level: $value\033[0;0m');
 		log.push('[${DateTools.format(Date.now(), '%H:%M:%S')} ${pos.fileName}:${pos.lineNumber}] $level: $value');
 	}
 
 	public static function prettyPrint(text:String)
 	{
-		var lines = text.split("\n");
+		var lines = text.split('\n');
 		var length = -1;
 		for (line in lines)
 			if (line.length > length)
 				length = line.length;
 
-		var header = "======";
+		var header = '======';
 		for (i in 0...length)
-			header += "=";
+			header += '=';
 
-		Sys.println("");
+		Sys.println('');
 		Sys.println('|$header|');
 		for (line in lines)
 		{
@@ -76,12 +76,12 @@ class Log
 		var centerOffset = (width - text.length) / 2;
 		var left = repeat(' ', Math.floor(centerOffset));
 		var right = repeat(' ', Math.ceil(centerOffset));
-		return left + text + right;
+		return '$left$text$right';
 	}
 
 	public static inline function repeat(ch:String, amt:Int)
 	{
-		var str = "";
+		var str = '';
 		for (i in 0...amt)
 			str += ch;
 		return str;
