@@ -4,7 +4,7 @@
 
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Funkin' Galaxy" file="FunkinGalaxy" main="Main" version="pre-release1" company="HaxeFlixel" />
+	<app title="Funkin' Galaxy" file="FunkinGalaxy" main="Main" version="pre-release2" company="HaxeFlixel" />
 
 	<!--The flixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
 		or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"-->

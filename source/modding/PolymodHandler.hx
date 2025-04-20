@@ -46,6 +46,68 @@ class PolymodHandler
 		}
 		framework ??= FLIXEL;
 
+		Polymod.addDefaultImport(Assets);
+
+		// Add import aliases for certain classes.
+		// NOTE: Scripted classes are automatically aliased to their parent class.
+		Polymod.addImportAlias('flixel.math.FlxPoint', flixel.math.FlxPoint.FlxBasePoint);
+
+		// `lime.utils.Assets` literally just has a private `resolveClass` function for some reason? so we replace it with our own.
+		Polymod.addImportAlias('lime.utils.Assets', Assets);
+		Polymod.addImportAlias('openfl.utils.Assets', Assets);
+
+		// Add blacklisting for prohibited classes and packages.
+
+		// `Sys`
+		// Sys.command() can run malicious processes
+		Polymod.blacklistImport('Sys');
+
+		// `Reflect`
+		// Reflect.callMethod() can access blacklisted packages, but some functions are whitelisted
+		Polymod.addImportAlias('Reflect', Reflect);
+
+		Polymod.addImportAlias('CoolUtil', CoolUtil);
+
+		Polymod.addImportAlias('BackgroundGirls', BackgroundGirls);
+		Polymod.addImportAlias('PlayState', PlayState);
+
+		// `Type`
+		// Type.createInstance(Type.resolveClass()) can access blacklisted packages, but some functions are whitelisted
+		Polymod.addImportAlias('Type', Type);
+
+		// `cpp.Lib`
+		// Lib.load() can load malicious DLLs
+		Polymod.blacklistImport('cpp.Lib');
+
+		// `Unserializer`
+		// Unserializer.DEFAULT_RESOLVER.resolveClass() can access blacklisted packages
+		Polymod.blacklistImport('Unserializer');
+
+		// `lime.system.CFFI`
+		// Can load and execute compiled binaries.
+		Polymod.blacklistImport('lime.system.CFFI');
+
+		// `lime.system.JNI`
+		// Can load and execute compiled binaries.
+		Polymod.blacklistImport('lime.system.JNI');
+
+		// `lime.system.System`
+		// System.load() can load malicious DLLs
+		Polymod.blacklistImport('lime.system.System');
+
+		// `lime.utils.Assets`
+		// Literally just has a private `resolveClass` function for some reason?
+		Polymod.blacklistImport('lime.utils.Assets');
+		Polymod.blacklistImport('openfl.utils.Assets');
+		Polymod.blacklistImport('openfl.Lib');
+		Polymod.blacklistImport('openfl.system.ApplicationDomain');
+		Polymod.blacklistImport('openfl.net.SharedObject');
+
+		// `openfl.desktop.NativeProcess`
+		// Can load native processes on the host operating system.
+		Polymod.blacklistImport('openfl.desktop.NativeProcess');
+
+
 		Polymod.init({
 			framework: framework,
 			modRoot: "./mods/",

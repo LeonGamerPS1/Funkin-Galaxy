@@ -1,4 +1,5 @@
 package object.stages;
+
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 
@@ -9,10 +10,8 @@ class Spooky extends BaseStage
 
 	override function create()
 	{
-		
-			halloweenBG = new BGSprite('halloween_bg', -200, -100,1,1, ['halloweem bg0', 'halloweem bg lightning strike']);
-		
-		
+		halloweenBG = new BGSprite('halloween_bg', -200, -100, 1, 1, ['halloweem bg0', 'halloweem bg lightning strike']);
+
 		add(halloweenBG);
 
 		if (PlayState.isStoryMode && PlayState.song.songName == "monster")
@@ -22,9 +21,8 @@ class Spooky extends BaseStage
 	override function createPost()
 	{
 		halloweenWhite = new BGSprite(null, -800, -400, 0, 0);
-		halloweenWhite.makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.WHITE);
+		halloweenWhite.makeGraphic(FlxG.width * 2, FlxG.height * 2);
 		halloweenWhite.alpha = 0;
-		halloweenWhite.blend = ADD;
 		add(halloweenWhite);
 	}
 
@@ -42,8 +40,7 @@ class Spooky extends BaseStage
 	function lightningStrikeShit():Void
 	{
 		FlxG.sound.play(Assets.sound('thunder_1'));
-		
-			halloweenBG.animation.play('halloweem bg lightning strike');
+		halloweenBG.animation.play('halloweem bg lightning strike');
 
 		lightningStrikeBeat = Math.floor(curBeat);
 		lightningOffset = FlxG.random.int(8, 24);
@@ -75,9 +72,8 @@ class Spooky extends BaseStage
 		boyfriend.playAnim('scared', true);
 
 		// white flash
-		var whiteScreen:FlxSprite = new FlxSprite().makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.WHITE);
+		var whiteScreen:FlxSprite = new FlxSprite().makeGraphic(3333, 3333, FlxColor.WHITE);
 		whiteScreen.scrollFactor.set();
-		whiteScreen.blend = ADD;
 		add(whiteScreen);
 		FlxTween.tween(whiteScreen, {alpha: 0}, 1, {
 			startDelay: 0.1,

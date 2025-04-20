@@ -32,8 +32,6 @@ class PlayState extends FlxState implements IStageState
 	public var bf:Character;
 	public var dad:Character;
 
-
-
 	// dont mess with these
 	var lastEventIndex(default, null):Int = 0;
 
@@ -69,14 +67,13 @@ class PlayState extends FlxState implements IStageState
 		add(playfield);
 		playfield.addIcon(bf.json.health_icon, true);
 		playfield.addIcon(dad.json.health_icon);
-	
-
 
 		for (value in playfield.strumlines)
 		{
 			value.character = !value.cpu ? bf : dad;
 		}
 
+		forEachStage((__) -> __.createPost());
 		startCallback();
 
 		super.create();
@@ -130,8 +127,7 @@ class PlayState extends FlxState implements IStageState
 		{
 			case "Spooky":
 				add(new Spooky(this, true));
-			case "School":
-				add(new School(this, true));
+
 			default:
 				for (scriptedStage in ScriptedStage.listScriptClasses())
 				{
@@ -171,7 +167,7 @@ class PlayState extends FlxState implements IStageState
 		add(dad);
 		add(bf);
 		camFollow = new FlxObject();
-		moveCamera('gf');
+		moveCamera('dad');
 		FlxG.camera.follow(camFollow, LOCKON, 0.04);
 		FlxG.camera.snapToTarget();
 		add(camFollow);
@@ -246,7 +242,7 @@ class PlayState extends FlxState implements IStageState
 		}
 
 		camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, Math.exp(-elapsed * 5));
-		FlxG.camera.zoom = FlxMath.lerp(1, FlxG.camera.zoom, Math.exp(-elapsed * 5));
+		FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, Math.exp(-elapsed * 5));
 
 		if (song.events[lastEventIndex] != null && song.events[lastEventIndex].time <= Conductor.instance.time)
 		{
@@ -332,15 +328,32 @@ class PlayState extends FlxState implements IStageState
 			gf.dance();
 		playfield.iconP1.scale.set(1.2, 1.2);
 		playfield.iconP2.scale.set(1.2, 1.2);
+		forEachStage((_) ->
+		{
+			_.curBeat = curBeat;
+			_.beatHit();
+		});
 	}
 
-	public function measureHit(curBeat:Float)
+	public function measureHit(curSection:Float)
 	{
 		camHUD.zoom += hudCameraZoomIntensity;
 		FlxG.camera.zoom += 0.015;
+		forEachStage((_) ->
+		{
+			_.curSection = curSection;
+			_.sectionHit();
+		});
 	}
 
-	public function stepHit(curBeat:Float) {}
+	public function stepHit(curStep:Float)
+	{
+		forEachStage((_) ->
+		{
+			_.curStep = curStep;
+			_.stepHit();
+		});
+	}
 }
 
 @:publicFields

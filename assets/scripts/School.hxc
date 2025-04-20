@@ -1,6 +1,9 @@
-package object.stages;
-
+import flixel.FlxSprite;
 import flixel.addons.display.FlxBackdrop;
+import object.BGSprite;
+import object.BackgroundGirls;
+import object.BaseStage;
+import backend.Assets;
 
 class School extends BaseStage
 {
@@ -8,7 +11,7 @@ class School extends BaseStage
 
 	override function create()
 	{
-		var bgSky:FlxBackdrop = new FlxBackdrop(Assets.image('weeb/weebSky'),XY,0,0);
+		var bgSky:FlxSprite = new FlxSprite(0,0,Assets.image('weeb/weebSky'));
 		bgSky.scrollFactor.set(0.1, 0.1);
 		add(bgSky);
 		bgSky.antialiasing = false;
@@ -23,11 +26,11 @@ class School extends BaseStage
 		add(bgStreet);
 		bgStreet.antialiasing = false;
 
-		var widShit = Std.int(bgSky.width * 6);
+		var widShit = bgSky.width * 6;
 		var bgTrees:FlxSprite = new FlxSprite(repositionShit - 380, -800);
 
 		var fgTrees:BGSprite = new BGSprite('weeb/weebTreesBack', repositionShit + 170, 130, 0.9, 0.9);
-		fgTrees.setGraphicSize(Std.int(widShit * 0.8));
+		fgTrees.setGraphicSize(widShit * 0.8);
 		fgTrees.updateHitbox();
 		add(fgTrees);
 		fgTrees.antialiasing = false;
@@ -48,7 +51,7 @@ class School extends BaseStage
 		bgSky.setGraphicSize(widShit);
 		bgSchool.setGraphicSize(widShit);
 		bgStreet.setGraphicSize(widShit);
-		bgTrees.setGraphicSize(Std.int(widShit * 1.4));
+		bgTrees.setGraphicSize(widShit * 1.4);
 
 		bgSky.updateHitbox();
 		bgSchool.updateHitbox();
@@ -93,49 +96,3 @@ class School extends BaseStage
 	}
 }
 
-class BackgroundGirls extends FlxSprite
-{
-	var isPissed:Bool = true;
-
-	public function new(x:Float, y:Float)
-	{
-		super(x, y);
-
-		// BG fangirls dissuaded
-		frames = Assets.getAtlas('weeb/bgFreaks');
-		antialiasing = false;
-		swapDanceType();
-
-		setGraphicSize(Std.int(width * 6));
-		updateHitbox();
-		animation.play('danceLeft');
-	}
-
-	var danceDir:Bool = false;
-
-	public function swapDanceType():Void
-	{
-		isPissed = !isPissed;
-		if (!isPissed)
-		{ // Gets unpissed
-			animation.addByIndices('danceLeft', 'BG girls group', CoolUtil.numberArray(14), "", 24, false);
-			animation.addByIndices('danceRight', 'BG girls group', CoolUtil.numberArray(30, 15), "", 24, false);
-		}
-		else
-		{ // Pisses
-			animation.addByIndices('danceLeft', 'BG fangirls dissuaded', CoolUtil.numberArray(14), "", 24, false);
-			animation.addByIndices('danceRight', 'BG fangirls dissuaded', CoolUtil.numberArray(30, 15), "", 24, false);
-		}
-		dance();
-	}
-
-	public function dance():Void
-	{
-		danceDir = !danceDir;
-
-		if (danceDir)
-			animation.play('danceRight', true);
-		else
-			animation.play('danceLeft', true);
-	}
-}

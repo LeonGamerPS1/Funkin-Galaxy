@@ -23,21 +23,10 @@ class Assets
 		return getPath('fonts/$key');
 	}
 
-	inline public static function sound(key:String):Sound
+	inline public static function sound(key:String)
 	{
 		var path = getPath('sounds/$key.ogg');
-		if (sounds.exists(path))
-			return sounds.get(path);
-
-		if (openfl.Assets.exists(path, SOUND))
-		{
-			var sound:Sound = new Sound(new URLRequest(path));
-			sounds.set(path, sound);
-			return sound;
-		}
-
-		Log.error('Could not find Sound of ID (path: $path | key: sounds/$key.png).');
-		return null;
+		return path;
 	}
 
 	inline public static function image(key:String):FlxGraphic

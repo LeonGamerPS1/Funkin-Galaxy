@@ -51,7 +51,8 @@ typedef Event = {
 class Song {
 	private static var _cache(default, null):Map<String, SongMap> = new Map<String, SongMap>();
 
-	public static function grabSong(songID:String = "Test", jsonName:String = "hard"):SongMap {
+	public static function grabSong(songID:String = "Duality", jsonName:String = "hard"):SongMap
+	{
 		var id:String = songID + '-$jsonName';
 		if (_cache.exists(id))
 			return Reflect.copy(_cache.get(id));
