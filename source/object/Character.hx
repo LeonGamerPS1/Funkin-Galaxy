@@ -1,4 +1,5 @@
 package object;
+
 typedef CharacterData =
 {
 	var name:String;
@@ -281,10 +282,12 @@ class Character extends FlxSprite
 
 	public static var singAnimations = ["singLEFT", "singDOWN", "singUP", "singRIGHT"];
 
-	public function confirmAnimation(note:Note, ?playAnim:Bool = true)
+	public function singAnimation(note:Note, ?playAnim:Bool = true, ?miss:Bool = false)
 	{
 		if (hasAnimation(singAnimations[note.noteData.data]) && playAnim)
+		{
 			this.playAnim(singAnimations[note.noteData.data], true);
+		}
 		holdTimer = 0;
 	}
 }

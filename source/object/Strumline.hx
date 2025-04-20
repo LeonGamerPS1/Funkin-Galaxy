@@ -29,7 +29,7 @@ class Strumline extends FlxGroup
 		hitSignal.add((note) ->
 		{
 			if (character != null)
-				character.confirmAnimation(note, !note.sustainHit);
+				character.singAnimation(note, !note.sustainHit);
 		});
 
 		generateStrums(skin);

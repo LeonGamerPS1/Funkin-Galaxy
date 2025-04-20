@@ -77,13 +77,13 @@ class Playfield extends FlxGroup
 	{
 		health -= 0.05;
 		score -= 150;
-		PlayState.instance.bf.playAnim('singDOWNmiss');
+		note.strumline.character.singAnimation(note, !note.sustainHit, true);
 	}
 
 	public function onHit(note:Note)
 	{
 		var strumline = note.strumline;
-		strumline.character.confirmAnimation(note, !note.sustainHit);
+		strumline.character.singAnimation(note, !note.sustainHit);
 		if (!note.wasGoodHit && note.strumline.cpu == false)
 		{
 			health += 0.05;
