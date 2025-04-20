@@ -8,7 +8,7 @@ class Mac
 			Context.onGenerate(onGenerate);
 		}
 
-		var request:String = 'package~${targetPackage}~${includeSubPackages ? "recursive" : "nonrecursive"}';
+		var request:String = 'package~${targetPackage}~${includeSubPackages ? 'recursive' : 'nonrecursive'}';
 
 		classListsToGenerate.push(request);
 

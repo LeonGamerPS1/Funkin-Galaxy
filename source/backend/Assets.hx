@@ -10,10 +10,10 @@ class Assets
 
 	inline public static function getPath(path:String)
 	{
-		return getPreloadPath(path);
+		return getAssetPath(path);
 	}
 
-	inline public static function getPreloadPath(path:String)
+	inline public static function getAssetPath(path:String)
 	{
 		return 'assets/$path';
 	}
@@ -80,11 +80,11 @@ class Assets
 		return getSparrowAtlas(key);
 	}
 
-	public static function readAssetsDirectoryFromLibrary(path:String, ?type:String, ?suffix:String = "", ?removePath:Bool = false):Array<String>
+	public static function readAssetsDirectoryFromLibrary(path:String, ?type:String, ?suffix:String = '', ?removePath:Bool = false):Array<String>
 	{
 		final lib = openfl.utils.Assets.getLibrary('default');
 		final list:Array<String> = lib.list(type);
-		path = 'assets/$path';
+		path = getAssetPath(path);
 		var stringList:Array<String> = [];
 		for (hmm in list)
 		{

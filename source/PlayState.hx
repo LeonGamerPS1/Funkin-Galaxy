@@ -19,7 +19,7 @@ class PlayState extends FlxState implements IStageState
 
 	public static var song:SongMap;
 
-	public var camHUD:FunkinCamera = new FunkinCamera("hud");
+	public var camHUD:FunkinCamera = new FunkinCamera('hud');
 
 	public var BF_X:Float = 770;
 	public var BF_Y:Float = 100;
@@ -45,7 +45,7 @@ class PlayState extends FlxState implements IStageState
 		if (song == null)
 			song = Song.grabSong();
 
-		FlxG.cameras.reset(new FunkinCamera("play"));
+		FlxG.cameras.reset(new FunkinCamera('play'));
 		camHUD.bgColor.alpha = 0;
 		FlxG.cameras.add(camHUD, false);
 
@@ -80,11 +80,11 @@ class PlayState extends FlxState implements IStageState
 	}
 
 	public var stageJson:StageFile;
-	public var curStage:String = "";
+	public var curStage:String = '';
 
 	function parseStage()
 	{
-		// path ??= "stage";
+		// path ??= 'stage';
 		if (song.stage == null || song.stage.length < 1)
 			song.stage = StageUtil.vanillaSongStage(song.songName);
 
@@ -97,7 +97,7 @@ class PlayState extends FlxState implements IStageState
 		else
 		{
 			stageJson = cast Json.parse(Assets.getText('assets/stages/Stage.json'));
-			curStage = "Stage";
+			curStage = 'Stage';
 		}
 		if (stageJson.defaultCamZoom != null)
 			defaultCamZoom = stageJson.defaultCamZoom;
@@ -125,7 +125,7 @@ class PlayState extends FlxState implements IStageState
 
 		switch curStage
 		{
-			case "Spooky":
+			case 'Spooky':
 				add(new Spooky(this, true));
 
 			default:
@@ -238,7 +238,7 @@ class PlayState extends FlxState implements IStageState
 				var dial:FileReference = new FileReference();
 				dial.save(Bytes.ofString(Json.stringify(Song.fromPsychLegacy(psych))), 'default.json');
 			});
-			fileRef.open('json', null, "Legacy convert/ 0.7.3 psych");
+			fileRef.open('json', null, 'Legacy convert/ 0.7.3 psych');
 		}
 
 		camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, Math.exp(-elapsed * 5));
@@ -274,12 +274,12 @@ class PlayState extends FlxState implements IStageState
 
 		switch (event.name)
 		{
-			case "Camera Focus":
+			case 'Camera Focus':
 				moveCamera(event.values[0]);
 		}
 	}
 
-	public function moveCamera(target:String = "dad")
+	public function moveCamera(target:String = 'dad')
 	{
 		switch (target.toLowerCase())
 		{
@@ -310,12 +310,12 @@ class PlayState extends FlxState implements IStageState
 	public function startCountdown()
 	{
 		startedCountdown = true;
-		tracks.set('main', FlxG.sound.load(Assets.getPreloadPath(song.tracks.main)));
+		tracks.set('main', FlxG.sound.load(Assets.getAssetPath(song.tracks.main)));
 		for (track_ in song.tracks.extra)
 		{
-			if (!Assets.exists(Assets.getPreloadPath(track_)))
+			if (!Assets.exists(Assets.getAssetPath(track_)))
 				continue;
-			tracks.set(track_, FlxG.sound.load(Assets.getPreloadPath(track_)));
+			tracks.set(track_, FlxG.sound.load(Assets.getAssetPath(track_)));
 		}
 	}
 
@@ -364,10 +364,10 @@ class StageUtil
 		trace(s);
 		switch (s)
 		{
-			case "school":
-				return "gf-pixel";
-			case "schoolEvil":
-				return "gf-pixel";
+			case 'school':
+				return 'gf-pixel';
+			case 'schoolEvil':
+				return 'gf-pixel';
 			case 'mall':
 				return 'gf-christmas';
 			case 'mallEvil':
