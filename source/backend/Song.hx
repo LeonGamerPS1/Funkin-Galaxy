@@ -53,11 +53,14 @@ class Song {
 
 	public static function grabSong(songID:String = "Duality", jsonName:String = "hard"):SongMap
 	{
+		final songPath:String = Assets.getAssetPath('songs/$songID/$jsonName.json');
+
 		var id:String = songID + '-$jsonName';
 		if (_cache.exists(id))
 			return Reflect.copy(_cache.get(id));
-		if (Assets.exists('assets/songs/$songID/$jsonName.json')) {
-			var json = Json.parse(Assets.getText('assets/songs/$songID/$jsonName.json'));
+		if (Assets.exists(songPath))
+		{
+			var json = Json.parse(Assets.getText(songPath));
 			_cache.set(id, json);
 
 			return Reflect.copy(json);
