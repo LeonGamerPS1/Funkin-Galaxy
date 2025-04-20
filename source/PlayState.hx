@@ -310,12 +310,12 @@ class PlayState extends FlxState implements IStageState
 	public function startCountdown()
 	{
 		startedCountdown = true;
-		tracks.set('main', FlxG.sound.load(Assets.getPreloadPath(song.tracks.main)));
+		tracks.set('main', FlxG.sound.load(Assets.getAssetPath(song.tracks.main)));
 		for (track_ in song.tracks.extra)
 		{
-			if (!Assets.exists(Assets.getPreloadPath(track_)))
+			if (!Assets.exists(Assets.getAssetPath(track_)))
 				continue;
-			tracks.set(track_, FlxG.sound.load(Assets.getPreloadPath(track_)));
+			tracks.set(track_, FlxG.sound.load(Assets.getAssetPath(track_)));
 		}
 	}
 

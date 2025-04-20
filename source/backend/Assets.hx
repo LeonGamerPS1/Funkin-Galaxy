@@ -10,10 +10,10 @@ class Assets
 
 	inline public static function getPath(path:String)
 	{
-		return getPreloadPath(path);
+		return getAssetPath(path);
 	}
 
-	inline public static function getPreloadPath(path:String)
+	inline public static function getAssetPath(path:String)
 	{
 		return 'assets/$path';
 	}
