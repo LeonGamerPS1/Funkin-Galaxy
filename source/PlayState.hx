@@ -428,4 +428,5 @@ typedef StageFile =
 	public var camSPEED:Null<Float>;
 
 	public var defaultCamZoom:Null<Float>;
+	@:optional public var skin:String;
 }

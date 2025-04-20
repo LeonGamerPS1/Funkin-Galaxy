@@ -23,18 +23,15 @@ class Playfield extends FlxGroup
 	{
 		super();
 		var last = skin;
-		if (song.skinEnemy != null)
-			skin = song.skinEnemy;
+		var enemySkin = song.skinEnemy ?? skin;
+		var playerSkin = song.skinPlayer ?? skin;
 
-		opponentStrums = new Strumline(50, downScroll ? FlxG.height - 150 : 50, skin);
+		opponentStrums = new Strumline(50, downScroll ? FlxG.height - 150 : 50, enemySkin);
 		opponentStrums.cpu = true;
 		add(opponentStrums);
 		strumlines.push(opponentStrums);
 
-		skin = last;
-		if (song.skinPlayer != null)
-			skin = song.skinPlayer;
-		playerStrums = new Strumline(100 + (FlxG.width / 2), downScroll ? FlxG.height - 150 : 50, skin,);
+		playerStrums = new Strumline(100 + (FlxG.width / 2), downScroll ? FlxG.height - 150 : 50, playerSkin);
 		add(playerStrums);
 
 		strumlines.push(playerStrums);
@@ -160,6 +157,7 @@ class Playfield extends FlxGroup
 			else
 				icon.animation.curAnim.curFrame = 0;
 		}
+		health = FlxMath.bound(health, 0, 2);
 		super.update(elapsed);
 	}
 }
