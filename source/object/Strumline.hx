@@ -105,6 +105,7 @@ class Strumline extends FlxGroup
 				{
 					missSignal.dispatch(note, null);
 					note.handledMiss = true;
+					note.multAlpha = 0.5;
 				}
 			}
 
