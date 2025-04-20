@@ -3,6 +3,7 @@ package object;
 import backend.Song.SongMap;
 import flixel.text.FlxText;
 import flixel.util.FlxStringUtil;
+import haxe.Log;
 
 class Playfield extends FlxGroup
 {
@@ -75,12 +76,20 @@ class Playfield extends FlxGroup
 	{
 		health -= 0.05;
 		score -= 150;
+		try
+		{
+			note.strumline.character.singAnimation(note, true, true);
+		}
+		catch (e)
+		{
+			// Log.error(e);
+		}
 	}
 
 	public function onHit(note:Note)
 	{
 		var strumline = note.strumline;
-		strumline.character.confirmAnimation(note, !note.sustainHit);
+		strumline.character.singAnimation(note, !note.sustainHit);
 		if (!note.wasGoodHit && note.strumline.cpu == false)
 		{
 			health += 0.05;
