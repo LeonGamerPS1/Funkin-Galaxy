@@ -285,9 +285,7 @@ class Character extends FlxSprite
 	public function singAnimation(note:Note, ?playAnim:Bool = true, ?miss:Bool = false)
 	{
 		if (hasAnimation(singAnimations[note.noteData.data]) && playAnim)
-		{
 			this.playAnim('${singAnimations[note.noteData.data]}${miss ? 'miss' : ''}', true);
-		}
 		holdTimer = 0;
 	}
 }
