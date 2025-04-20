@@ -99,12 +99,17 @@ class Strumline extends FlxGroup
 				destroyNote(note);
 			}
 
-			if (note.noteData.time + note.noteData.length < Conductor.instance.time - (350 / songSpeed))
+			if (note.noteData.time < Conductor.instance.time - (350 / songSpeed)) // note misses when it is too late foryou to hit
 			{
-				if (!cpu && !note.wasGoodHit && !note.ignoreNote)
+				if (!cpu && !note.wasGoodHit && !note.ignoreNote && !note.handledMiss)
+				{
 					missSignal.dispatch(note, null);
-				destroyNote(note);
+					note.handledMiss = true;
+				}
 			}
+
+			if (note.noteData.time + note.noteData.length < Conductor.instance.time - (350 / songSpeed))
+				destroyNote(note);
 		}
 	}
 

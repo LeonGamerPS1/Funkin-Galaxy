@@ -10,6 +10,7 @@ class Note extends FlxSprite
 	public var wasGoodHit:Bool = false;
 	public var inHitZone:Bool = false;
 	public var sustainAngle:Float = 90;
+	public var handledMiss:Bool = false;
 
 	public function new(noteData:NoteData, ?skin:String = 'default')
 	{
