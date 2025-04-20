@@ -32,7 +32,7 @@ class HealthIcon extends FlxSprite
 			if (animation.getByName(newChar) == null)
 			{
 				var path = 'icons/icon-$newChar';
-				if (!Assets.exists(Assets.getAssetPath('images/$path')))
+				if (!Assets.exists(Assets.getAssetPath('images/$path.png')))
 					path = 'icons/icon-questionmark';
 
 				loadGraphic(Assets.image(path));
