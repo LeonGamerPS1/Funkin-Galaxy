@@ -78,6 +78,7 @@ class Playfield extends FlxGroup
 		health -= 0.05;
 		score -= 150;
 	}
+
 	public function onHit(note:Note)
 	{
 		var strumline = note.strumline;
@@ -125,6 +126,7 @@ class Playfield extends FlxGroup
 
 		return songSpeed = value;
 	}
+
 	public override function update(elapsed:Float)
 	{
 		scoreText.text = 'Score: ' + FlxStringUtil.formatMoney(score, true, false).replace(',00', ''); // because i dont want ,00
