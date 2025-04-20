@@ -41,7 +41,7 @@ class NoteSkinConfig
 
 	private static inline function getDefaultSkin(missingName:String):NoteSkinData
 	{
-		Log.warn('Skin '$missingName ' not found. Reverting to default.');
+		Log.warn('Skin "$missingName" not found. Reverting to default.');
 		return {
 			image: 'noteSkins/note',
 			scaleFactor: 0.7,
