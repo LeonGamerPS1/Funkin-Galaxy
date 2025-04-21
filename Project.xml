@@ -32,8 +32,12 @@
 	<set name="BUILD_DIR" value="export/debug" if="debug"/>
 	<set name="BUILD_DIR" value="export/release" unless="debug"/>
 
+	<define name="BASEGAME" />
 	<source path="source" />
 	<assets path="assets" />
+	<section if="BASEGAME">
+		<assets path="base_game" rename="assets"/>
+	</section>
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
