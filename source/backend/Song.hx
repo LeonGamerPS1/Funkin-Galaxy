@@ -51,7 +51,7 @@ typedef Event = {
 class Song {
 	private static var _cache(default, null):Map<String, SongMap> = new Map<String, SongMap>();
 
-	public static function grabSong(songID:String = 'Duality', jsonName:String = 'hard'):SongMap
+	public static function grabSong(songID:String = 'Bopeebo', jsonName:String = 'hard'):SongMap
 	{
 		final songPath:String = Assets.getAssetPath('songs/$songID/$jsonName.json');
 
