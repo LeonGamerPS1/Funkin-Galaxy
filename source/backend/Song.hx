@@ -1,6 +1,7 @@
 package backend;
 
-typedef SongMap = {
+typedef SongMap =
+{
 	var displayName:String; // name of the song to be displayed
 	var players:Array<String>; // dad is first, gf is second and bf is third
 	var songName:String; // name of the song
@@ -21,7 +22,8 @@ typedef SongMap = {
 	@:optional var skinEnemy:String;
 }
 
-typedef BPMChange = {
+typedef BPMChange =
+{
 	var denominator:Float; // beatcount of the measure
 	var numerator:Float; // stepcount of the beat :3 both this and denominator are 4 by default
 
@@ -29,12 +31,14 @@ typedef BPMChange = {
 	var time:Float; // time in ms telling  the game when the bpm change happens
 }
 
-typedef T_trackdata_ = {
+typedef T_trackdata_ =
+{
 	var main:String;
 	@:optional var extra:Array<String>;
 }
 
-typedef NoteData = {
+typedef NoteData =
+{
 	var time:Float; // time of the note
 	var data:Int; // direction of the note
 	var length:Float; // length of the note
@@ -42,28 +46,25 @@ typedef NoteData = {
 	var strumLine:Int; // the strumline of the note
 }
 
-typedef Event = {
+typedef Event =
+{
 	var time:Float; // time of the event
 	var values:Array<Dynamic>;
 	var name:String; // name of the event
 }
 
-class Song {
-	private static var _cache(default, null):Map<String, SongMap> = new Map<String, SongMap>();
-
-	public static function grabSong(songID:String = 'Bopeebo', jsonName:String = 'hard'):SongMap
+class Song
+{
+	public static function grabSong(songID:String = 'Test', jsonName:String = 'hard'):SongMap
 	{
 		final songPath:String = Assets.getAssetPath('songs/$songID/$jsonName.json');
 
 		var id:String = '$songID-$jsonName';
-		if (_cache.exists(id))
-			return Reflect.copy(_cache.get(id));
+
 		if (Assets.exists(songPath))
 		{
 			var json = Json.parse(Assets.getText(songPath));
-			_cache.set(id, json);
-
-			return Reflect.copy(json);
+			return json;
 		}
 		return {
 			displayName: 'Unknown',
@@ -81,7 +82,8 @@ class Song {
 		};
 	}
 
-	public static function fromPsychLegacy(legacyJson:moonchart.formats.fnf.legacy.FNFPsych) {
+	public static function fromPsychLegacy(legacyJson:moonchart.formats.fnf.legacy.FNFPsych)
+	{
 		// uwu~
 		var output:SongMap = {
 			displayName: legacyJson.data.song.song,
@@ -110,9 +112,11 @@ class Song {
 		var beatLength:Float = 60 / output.bpm;
 		beatLength *= 1000;
 
-		for (section in legacyJson.data.song.notes) {
+		for (section in legacyJson.data.song.notes)
+		{
 			var sectionTime:Float = (beatLength * 4) * (legacyJson.data.song.notes.indexOf(section));
-			if (section.changeBPM == true) {
+			if (section.changeBPM == true)
+			{
 				beatLength = 60 / output.bpm;
 				beatLength *= 1000;
 				sectionTime = (beatLength * 4) * (legacyJson.data.song.notes.indexOf(section));
@@ -131,7 +135,8 @@ class Song {
 				values: [section.mustHitSection ? 'bf' : 'dad']
 			});
 
-			for (note in section.sectionNotes) {
+			for (note in section.sectionNotes)
+			{
 				var mustHit = section.mustHitSection;
 				if (note.lane > 3)
 					mustHit = !section.mustHitSection;
@@ -155,7 +160,8 @@ class Song {
 		return output;
 	}
 
-	public static function fromVslice(legacyJson:moonchart.formats.fnf.FNFVSlice) {
+	public static function fromVslice(legacyJson:moonchart.formats.fnf.FNFVSlice)
+	{
 		// TODO: Finish chart converter for  vslice to galaxy
 	}
 }

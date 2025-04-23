@@ -12,16 +12,18 @@ class Strumline extends FlxGroup
 
 	public var cpu:Bool = false;
 	public var character:Character;
+	public var scale:Float = 1;
 
-	public function new(x:Float = 0, y:Float = 0, ?skin:String = 'default')
+	public function new(x:Float = 0, y:Float = 0, ?skin:String = 'default', scale:Float = 1,)
 	{
 		super();
 
-		strums = new FlxTypedSpriteGroup<Strum>(x, y);
-		add(strums);
-
+		this.scale = scale;
 		sustains = new FlxTypedGroup<Sustain>();
 		add(sustains);
+
+		strums = new FlxTypedSpriteGroup<Strum>(x, y);
+		add(strums);
 
 		notes = new FlxTypedGroup<Note>();
 		add(notes);
@@ -40,9 +42,8 @@ class Strumline extends FlxGroup
 	{
 		for (i in 0...i)
 		{
-			var strum = strums.add(new Strum(i, skin));
-			strum.applyPosition(strums.x + ((160 * 0.7) * i), strums.y);
-			strum.strumline = this;
+			var strum = strums.add(new Strum(i, this, skin));
+			strum.applyPosition(strums.x + ((160 * 0.7 * scale) * i), strums.y);
 		}
 	}
 

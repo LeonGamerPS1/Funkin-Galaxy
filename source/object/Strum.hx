@@ -1,15 +1,17 @@
 package object;
 
-class Strum extends FlxSprite {
+class Strum extends FlxSprite
+{
 	public var id = 0;
 	public var skin:NoteSkinData;
 	public var downScroll:Bool = false;
-	public var strumline:Strumline; // only for stuff. bitch
+	public var strumline:Strumline; // needed for some things
 
-	public function new(id:Int = 0, ?skin:String = 'default')
+	public function new(id:Int = 0, strumline:Strumline, ?skin:String = 'default')
 	{
 		super();
 		this.id = id;
+		this.strumline = strumline;
 		this.skin = NoteSkinConfig.getSkin(skin);
 
 		applySkin();
@@ -17,7 +19,8 @@ class Strum extends FlxSprite {
 
 	public static var directions:Array<String> = ['left', 'down', 'up', 'right'];
 
-	public function applySkin() {
+	public function applySkin()
+	{
 		var img = Assets.getAtlas(skin.image);
 		frames = img;
 
@@ -28,7 +31,7 @@ class Strum extends FlxSprite {
 		playAnim('static');
 		updateHitbox();
 
-		setGraphicSize(width * skin.scaleFactor);
+		setGraphicSize(width * skin.scaleFactor * strumline.scale);
 		updateHitbox();
 	}
 
@@ -40,16 +43,21 @@ class Strum extends FlxSprite {
 		centerOrigin();
 	}
 
-	public function applyPosition(x:Float = 0, y:Float = 0):Strum { // exists because setPosition  stinky.. hehh...
+	public function applyPosition(x:Float = 0, y:Float = 0):Strum
+	{ // exists because setPosition  stinky.. hehh...
 		setPosition(x, y);
 		return this;
 	}
+
 	public var resetAnim:Float = 0;
 
-	override function update(elapsed:Float) {
-		if (resetAnim > 0) {
+	override function update(elapsed:Float)
+	{
+		if (resetAnim > 0)
+		{
 			resetAnim -= elapsed;
-			if (resetAnim < 0) {
+			if (resetAnim < 0)
+			{
 				resetAnim = 0;
 				playAnim('static');
 			}

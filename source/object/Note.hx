@@ -12,11 +12,12 @@ class Note extends FlxSprite
 	public var sustainAngle:Float = 90;
 	public var handledMiss:Bool = false;
 
-	public function new(noteData:NoteData, ?skin:String = 'default')
+	public function new(noteData:NoteData, strumline:Strumline, ?skin:String = 'default')
 	{
 		super(0, -6000);
 		this.noteData = noteData;
-		this.noteData = noteData;
+		this.strumline = strumline;
+
 		this.skin = NoteSkinConfig.getSkin(skin);
 
 		applySkin();
@@ -24,10 +25,9 @@ class Note extends FlxSprite
 
 	public function applySkin()
 	{
-		var img = Assets.getAtlas(skin.image);
-		if (img == null)
+		if (skin == null) // should prevent the haxeflixel logo from showing up or crashing
 			skin = NoteSkinConfig.getSkin('default');
-
+		var img = Assets.getAtlas(skin.image);
 		frames = img;
 
 		animation.addByPrefix('static', '${Strum.directions[noteData.data]}0', 24, false);
@@ -38,7 +38,7 @@ class Note extends FlxSprite
 		playAnim('static');
 		updateHitbox();
 
-		setGraphicSize(width * skin.scaleFactor);
+		setGraphicSize(width * skin.scaleFactor * strumline.scale);
 		updateHitbox();
 	}
 

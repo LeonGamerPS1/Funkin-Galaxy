@@ -108,9 +108,8 @@ class Playfield extends FlxGroup
 		{
 			if (strumlines[note.strumLine] == null)
 				continue;
-			var noteObject:Note = new Note(note, strumlines[note.strumLine].strums.members[note.data].skin.name);
+			var noteObject:Note = new Note(note, strumlines[note.strumLine], strumlines[note.strumLine].strums.members[note.data].skin.name);
 			strumlines[note.strumLine].unspawnNotes.push(noteObject);
-			noteObject.strumline = strumlines[note.strumLine];
 
 			if (note.length > 0)
 			{
