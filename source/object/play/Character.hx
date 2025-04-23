@@ -1,5 +1,4 @@
-package object;
-
+package object.play;
 typedef CharacterData =
 {
 	var name:String;

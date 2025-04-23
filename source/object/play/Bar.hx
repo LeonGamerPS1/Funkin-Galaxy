@@ -1,5 +1,4 @@
-package object;
-
+package object.play;
 class Bar extends FlxSpriteGroup
 {
 	public var leftBar:FlxSprite;

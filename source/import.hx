@@ -13,7 +13,9 @@ import flixel.ui.FlxBar;
 import flixel.util.FlxColor;
 import haxe.Json;
 import object.*;
+import object.play.*;
 import object.stages.*;
+import states.*;
 import sys.FileSystem;
 import sys.io.File;
 

@@ -1,4 +1,4 @@
-package object;
+package object.play;
 
 import backend.controls.Controls;
 import lime.app.Event;

@@ -1,6 +1,6 @@
 
 
-import object.BaseStage;
+import object.stages.BaseStage;
 import flixel.FlxG;
 import object.BGSprite;
 

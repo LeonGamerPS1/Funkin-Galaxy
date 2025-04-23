@@ -1,4 +1,4 @@
-package object;
+package object.play;
 
 class HealthIcon extends FlxSprite
 {

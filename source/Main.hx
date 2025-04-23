@@ -13,6 +13,6 @@ class Main extends Sprite
 		trace(ScriptedStage.listScriptClasses());
 		super();
 
-		addChild(new FlxGame(0, 0, InitState, 124, 124));
+		addChild(new FlxGame(0, 0, InitState, 140, 140));
 	}
 }

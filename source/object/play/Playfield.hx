@@ -1,5 +1,4 @@
-package object;
-
+package object.play;
 import backend.Song.SongMap;
 import flixel.text.FlxText;
 import flixel.util.FlxStringUtil;

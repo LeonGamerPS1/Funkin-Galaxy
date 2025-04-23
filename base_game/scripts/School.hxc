@@ -2,7 +2,7 @@ import flixel.FlxSprite;
 import flixel.addons.display.FlxBackdrop;
 import object.BGSprite;
 import object.BackgroundGirls;
-import object.BaseStage;
+import object.stages.BaseStage;
 import backend.Assets;
 
 class School extends BaseStage

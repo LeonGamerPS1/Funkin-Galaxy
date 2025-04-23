@@ -1,4 +1,4 @@
-package;
+package states;
 
 import backend.Song.SongMap;
 import flixel.text.FlxText;

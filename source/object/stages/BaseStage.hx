@@ -1,5 +1,4 @@
-package object;
-
+package object.stages;
 class BaseStage extends FlxBasic
 {
 	var parent:FlxState;

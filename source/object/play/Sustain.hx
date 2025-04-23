@@ -1,4 +1,4 @@
-package object;
+package object.play;
 
 class Sustain extends TiledSprite
 {

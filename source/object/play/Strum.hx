@@ -1,5 +1,4 @@
-package object;
-
+package object.play;
 class Strum extends FlxSprite
 {
 	public var id = 0;
