@@ -1,4 +1,5 @@
 package object.play;
+
 import backend.Song.SongMap;
 import flixel.text.FlxText;
 import flixel.util.FlxStringUtil;
@@ -33,6 +34,7 @@ class Playfield extends FlxGroup
 		strumlines.push(opponentStrums);
 
 		playerStrums = new Strumline(100 + (FlxG.width / 2), downScroll ? FlxG.height - 150 : 50, playerSkin);
+		playerStrums.cpu = true;
 		add(playerStrums);
 
 		strumlines.push(playerStrums);
@@ -135,8 +137,10 @@ class Playfield extends FlxGroup
 	public override function update(elapsed:Float)
 	{
 		scoreText.text = 'Score: ${FlxStringUtil.formatMoney(score, true, false).replace(',00', '')}'; // because i dont want ,00
-		iconP1.x = healthBar.barCenter + (150) - 150 - 24;
+		iconP1.x = healthBar.barCenter + (150) - 150 - 25;
 		iconP2.x = healthBar.barCenter - (150 * iconP2.scale.x);
+		iconP2.x += 20;
+		iconP1.x += 20;
 		iconP1.y = healthBar.y - (iconP1.height / 2);
 		iconP2.y = healthBar.y - (iconP2.height / 2);
 		for (icon in iconP1)
@@ -155,7 +159,7 @@ class Playfield extends FlxGroup
 		for (icon in iconP2)
 		{
 			var i = iconP2.members.indexOf(icon);
-			icon.setPosition(iconP2.x - ((i < 1 ? 150 : 70) * i));
+			icon.setPosition(iconP2.x - ((i < 1 ? icon.frameWidth : icon.frameWidth / 2) * i));
 
 			icon.y = iconP2.y;
 			if (healthBar.percent > 80)

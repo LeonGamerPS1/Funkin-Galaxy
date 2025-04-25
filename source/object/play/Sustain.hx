@@ -37,10 +37,13 @@ class Sustain extends TiledSprite
 	{
 		var length:Float = parent.noteData.length;
 
-		if (parent.wasGoodHit)
+		if (parent.wasGoodHit && !parent.inEditor)
 			length -= Math.abs(parent.noteData.time - Conductor.instance.time);
 
-		var expectedHeight:Float = (length * 0.45 * parent.speed) + tailHeight();
+		var expectedHeight:Float = (length * 0.45 * parent.speed);
+		if (parent.inEditor)
+			expectedHeight = Math.floor(FlxMath.remapToRange(length, 0, Conductor.instance.stepCrochet * 16, 0,
+				ChartingState.GRID_SIZE * 16)); // fixes incorrect sustain lengths in chart editor
 		if (height != expectedHeight)
 			this.height = Math.max(expectedHeight, 0);
 

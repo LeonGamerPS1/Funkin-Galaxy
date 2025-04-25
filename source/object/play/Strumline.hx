@@ -48,9 +48,17 @@ class Strumline extends FlxGroup
 	}
 
 	public var songSpeed:Float = 1;
+	public var charY:Null<Float>;
 
 	override function update(elapsed:Float)
 	{
+		if (character != null && charY == null)
+			charY = character.y;
+
+		if (charY != null && character.curCharacter == 'missingno')
+			character.y = 0 + charY + ((Math.sin((Conductor.instance.time / 16000) * (180 / Math.PI))) * 5);
+		for (i in strums)
+			i.scrollFactor.set(strums.scrollFactor.x, strums.scrollFactor.y);
 		if (!cpu)
 			keyFunction(elapsed);
 
@@ -71,6 +79,9 @@ class Strumline extends FlxGroup
 		}
 		super.update(elapsed);
 
+		if (cpu)
+			playerDance();
+
 		for (note in notes)
 		{
 			if (note == null || !note.alive || !note.exists)
@@ -80,12 +91,7 @@ class Strumline extends FlxGroup
 
 			if (cpu && note.wasGoodHit)
 			{
-				strum.resetAnim = Conductor.instance.stepCrochet * 1.5 / 1000;
 				hitSignal.dispatch(note);
-				if (!note.sustainHit)
-				{
-					strum.playAnim('confirm', true);
-				}
 				note.sustainHit = true;
 			}
 			if (note.noteData.time + note.noteData.length < Conductor.instance.time && note.wasGoodHit)
@@ -259,6 +265,8 @@ class Strumline extends FlxGroup
 
 	inline public function playerDance():Void
 	{
+		if (character == null)
+			return;
 		var anim:String = character.getAnimationName();
 		if (character.holdTimer > Conductor.instance.stepCrochet * (0.0011 #if FLX_PITCH / FlxG.timeScale #end) * character.singDuration
 			&& anim.startsWith('sing'))

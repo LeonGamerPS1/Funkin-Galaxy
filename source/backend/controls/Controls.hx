@@ -5,7 +5,8 @@ import flixel.addons.input.FlxControls;
 import flixel.input.gamepad.FlxGamepadInputID;
 import flixel.input.keyboard.FlxKey;
 
-enum Action {
+enum Action
+{
 	@:inputs([
 		flixel.input.keyboard.FlxKey.UP,
 		flixel.input.keyboard.FlxKey.W,
@@ -75,7 +76,7 @@ enum Action {
 	@:inputs([FlxKey.BACKSPACE, FlxKey.ESCAPE, B, BACK])
 	UI_BACK;
 
-	@:inputs([FlxKey.ENTER, FlxKey.SPACE, A, FlxVirtualPadInputID.A])
+	@:inputs([FlxKey.ENTER, A, FlxVirtualPadInputID.A])
 	UI_ACCEPT;
 
 	@:inputs([FlxKey.R, X])
@@ -85,6 +86,7 @@ enum Action {
 	CHART;
 }
 
-class Controls extends FlxControls<Action> {
+class Controls extends FlxControls<Action>
+{
 	static public var instance:Controls;
 }

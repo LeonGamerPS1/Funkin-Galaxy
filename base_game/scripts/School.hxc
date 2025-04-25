@@ -3,6 +3,7 @@ import flixel.addons.display.FlxBackdrop;
 import object.BGSprite;
 import object.BackgroundGirls;
 import object.stages.BaseStage;
+import states.PlayState;
 import backend.Assets;
 
 class School extends BaseStage
@@ -62,15 +63,7 @@ class School extends BaseStage
 		bgGirls.scrollFactor.set(0.9, 0.9);
 		add(bgGirls);
 
-		var songName = PlayState.song.songName.toLowerCase().replace(" ", "-");
-		switch (songName)
-		{
-			case 'dreams-of-roses' | 'roses':
-				FlxG.sound.play(Assets.sound('ANGRY_TEXT_BOX'));
-
-				if (bgGirls != null)
-					bgGirls.swapDanceType();
-		}
+		
 	}
 
 	override function beatHit()

@@ -35,26 +35,36 @@ class HealthIcon extends FlxSprite
 				if (!Assets.exists(Assets.getAssetPath('images/$path.png')))
 					path = 'icons/icon-questionmark';
 
-				loadGraphic(Assets.image(path));
-				var frames:Array<Int> = [];
+				if (!Assets.exists(Assets.getAssetPath('images/$path.xml')))
+				{
+					loadGraphic(Assets.image(path));
+					var frames:Array<Int> = [];
 
-				for (i in 0...Math.floor(width / 150))
-					frames.push(i);
-				trace('${frames.length} frames found for icon $newChar');
+					for (i in 0...Math.floor(width / 150))
+						frames.push(i);
+					trace('${frames.length} frames found for icon $newChar');
 
-				if (frames.contains(2))
-					winningIconFrame = 2; // actually the third frame but haxe shitty starts array stuff at 0 iirc
+					if (frames.contains(2))
+						winningIconFrame = 2; // actually the third frame but haxe shitty starts array stuff at 0 iirc
 
-				loadGraphic(Assets.image(path), true, 150, 150);
+					loadGraphic(Assets.image(path), true, 150, 150);
 
-				animation.add(newChar, frames, 0, false, isPlayer);
-				updateHitbox();
+					animation.add(newChar, frames, 0, false, isPlayer);
+					updateHitbox();
+				}
+				else
+				{
+					frames = Assets.getSparrowAtlas(path);
+					animation.addByPrefix(newChar, newChar, 0, false);
+					animation.play(newChar);
+					if (animation.numFrames > 2)
+						winningIconFrame = animation.numFrames - 1;
+				}
 			}
 			animation.play(newChar);
+			updateHitbox();
 			char = newChar;
 		}
-
-	
 	}
 
 	override function update(elapsed:Float)

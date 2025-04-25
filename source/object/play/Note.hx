@@ -11,6 +11,7 @@ class Note extends FlxSprite
 	public var inHitZone:Bool = false;
 	public var sustainAngle:Float = 90;
 	public var handledMiss:Bool = false;
+	public var inEditor:Bool = false;
 
 	public function new(noteData:NoteData, strumline:Strumline, ?skin:String = 'default')
 	{
@@ -19,6 +20,7 @@ class Note extends FlxSprite
 		this.strumline = strumline;
 
 		this.skin = NoteSkinConfig.getSkin(skin);
+		scrollFactor.set(0, 1);
 
 		applySkin();
 	}

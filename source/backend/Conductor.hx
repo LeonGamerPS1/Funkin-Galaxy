@@ -170,8 +170,14 @@ class Conductor
 	/**
 		Resets the conductor.
 	**/
-	inline function reset():Void
+	inline function reset(removeSignals:Bool = false):Void
 	{
+		if (removeSignals)
+		{
+			Conductor.instance.onBeat.removeAll();
+			Conductor.instance.onStep.removeAll();
+			Conductor.instance.onMeasure.removeAll();
+		}
 		stepOffset = beatOffset = measureOffset = offsetTime = time = 0.0;
 		changeBpmAt(0);
 	}

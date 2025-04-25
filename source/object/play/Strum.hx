@@ -62,5 +62,6 @@ class Strum extends FlxSprite
 			}
 		}
 		super.update(elapsed);
+
 	}
 }

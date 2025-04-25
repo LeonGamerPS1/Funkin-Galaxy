@@ -1,13 +1,15 @@
 package states;
 
 import backend.Song.SongMap;
+import backend.controls.Controls;
+import flixel.addons.transition.FlxTransitionableState;
 import flixel.text.FlxText;
 import haxe.io.Bytes;
 import lime.ui.FileDialog;
 import moonchart.formats.fnf.legacy.FNFPsych;
 import openfl.net.FileReference;
 
-class PlayState extends FlxState implements IStageState
+class PlayState extends FlxTransitionableState implements IStageState
 {
 	public static var isStoryMode(default, null):Bool = false;
 
@@ -19,7 +21,7 @@ class PlayState extends FlxState implements IStageState
 
 	public static var song:SongMap;
 
-	public var camHUD:FunkinCamera = new FunkinCamera('hud');
+	public var camHUD:FunkinCamera = new FunkinCamera();
 
 	public var BF_X:Float = 770;
 	public var BF_Y:Float = 100;
@@ -45,14 +47,12 @@ class PlayState extends FlxState implements IStageState
 		if (song == null)
 			song = Song.grabSong();
 
-		FlxG.cameras.reset(new FunkinCamera('play'));
+		FlxG.cameras.reset(new FunkinCamera());
 		camHUD.bgColor.alpha = 0;
 		FlxG.cameras.add(camHUD, false);
 
-		Conductor.instance.reset(); // reset just incase something happens
-		Conductor.instance.onBeat.removeAll();
-		Conductor.instance.onStep.removeAll();
-		Conductor.instance.onMeasure.removeAll();
+		Conductor.instance.reset(true); // reset just incase something happens
+
 		Conductor.instance.changeBpmAt(0, song.bpm, 4, 4);
 		Conductor.instance.time = -Conductor.instance.crochet * 5;
 		Conductor.instance.onStep.add(stepHit);
@@ -68,9 +68,9 @@ class PlayState extends FlxState implements IStageState
 		playfield.addIcon(bf.json.health_icon, true);
 		playfield.addIcon(dad.json.health_icon);
 
-		for (value in playfield.strumlines)
-		{
-			value.character = !value.cpu ? bf : dad;
+		@:privateAccess {
+			playfield.playerStrums.character = bf;
+			playfield.opponentStrums.character = dad;
 		}
 
 		forEachStage((__) -> __.createPost());
@@ -229,6 +229,8 @@ class PlayState extends FlxState implements IStageState
 			if (_ != tracks.get('main') && Math.abs(_.time - tracks.get('main').time) > 40)
 				_.time = tracks.get('main').time;
 
+		super.update(elapsed);
+
 		if (FlxG.keys.justPressed.C)
 		{
 			var fileRef:FileDialog = new FileDialog();
@@ -243,17 +245,31 @@ class PlayState extends FlxState implements IStageState
 
 		camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, Math.exp(-elapsed * 5));
 		FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, Math.exp(-elapsed * 5));
-
+		if (song.bpmMap[bpmIndex] != null && song.bpmMap[bpmIndex].time <= Conductor.instance.time)
+		{
+			var bpmChange = song.bpmMap[bpmIndex];
+			Conductor.instance.changeBpmAt(bpmChange.time, bpmChange.bpm, bpmChange.numerator, bpmChange.denominator);
+			bpmIndex++;
+		}
 		if (song.events[lastEventIndex] != null && song.events[lastEventIndex].time <= Conductor.instance.time)
 		{
 			triggerEvent(song.events[lastEventIndex]);
 			lastEventIndex++;
 		}
 
-		super.update(elapsed);
+		if (Controls.instance.justPressed.CHART)
+		{
+			ChartingState._song = song;
+			canUpdate = false;
+			Conductor.instance.reset(true);
+			FlxG.switchState(new ChartingState());
+		}
 	}
 
+	var bpmIndex = 0;
+
 	public var defaultZoom:Float = 1;
+	public var canUpdate = true;
 
 	function startSong()
 	{

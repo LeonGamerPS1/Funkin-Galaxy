@@ -39,6 +39,8 @@ class Assets
 		{
 			var image:FlxGraphic = FlxG.bitmap.add(path);
 			image.bitmap.disposeImage();
+			image.persist = true;
+			image.destroyOnNoUse = false;
 			images.set(path, image);
 
 			return image;

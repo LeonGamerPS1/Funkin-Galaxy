@@ -55,7 +55,7 @@ typedef Event =
 
 class Song
 {
-	public static function grabSong(songID:String = 'Test', jsonName:String = 'hard'):SongMap
+	public static function grabSong(songID:String = 'Missingno', jsonName:String = 'hard'):SongMap
 	{
 		final songPath:String = Assets.getAssetPath('songs/$songID/$jsonName.json');
 
@@ -63,7 +63,8 @@ class Song
 
 		if (Assets.exists(songPath))
 		{
-			var json = Json.parse(Assets.getText(songPath));
+			var json:SongMap = cast Json.parse(Assets.getText(songPath));
+			json.events.sort(function(event1, event2) return Math.floor(event1.time - event2.time));
 			return json;
 		}
 		return {
@@ -109,20 +110,20 @@ class Song
 			events: []
 		};
 
-		var beatLength:Float = 60 / output.bpm;
-		beatLength *= 1000;
+		var time:Float = 0;
+		var currentBPM:Float = output.bpm;
 
 		for (section in legacyJson.data.song.notes)
 		{
-			var sectionTime:Float = (beatLength * 4) * (legacyJson.data.song.notes.indexOf(section));
+			var intendedBPM:Null<Float> = (section.changeBPM) ? section.bpm : null;
+
+			if (intendedBPM != null && intendedBPM != currentBPM)
+				currentBPM = intendedBPM;
+
 			if (section.changeBPM == true)
 			{
-				beatLength = 60 / output.bpm;
-				beatLength *= 1000;
-				sectionTime = (beatLength * 4) * (legacyJson.data.song.notes.indexOf(section));
-
 				output.bpmMap.push({
-					time: sectionTime,
+					time: time,
 					denominator: 4,
 					numerator: 4,
 					bpm: section.bpm
@@ -130,7 +131,7 @@ class Song
 			}
 
 			output.events.push({
-				time: sectionTime,
+				time: time,
 				name: 'Camera Focus',
 				values: [section.mustHitSection ? 'bf' : 'dad']
 			});
@@ -155,6 +156,13 @@ class Song
 					type: type
 				});
 			}
+			time += (60 / currentBPM) * 4000;
+		}
+
+		for (i in legacyJson.data.song.events)
+		{
+			for (ii in i.pack)
+				output.events.push({time: i.time, values: [ii.value1, ii.value2], name: ii.name});
 		}
 
 		return output;
