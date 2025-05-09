@@ -7,4 +7,3 @@ This FNF Engine/Rewrite aims to recreate the feel and looks of Friday Night Funk
 - [sphis-Sinco](https://github.com/sphis-Sinco) - Coder
 ## Special Thanks
 - [SomeGuyWhoLovesCoding](https://github.com/SomeGuyWhoLovesCoding) - Conductor class. Check out [Funkin' View!](https://github.com/SomeGuyWhoLovesCoding/FNF-PeoteView)  Shout-out to You, Swglfnf!
-- [MaybeMaru](https://github.com/MaybeMaru) - [Moonchart Libary](https://github.com/MaybeMaru/moonchart)
