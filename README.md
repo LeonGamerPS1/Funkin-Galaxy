@@ -8,4 +8,3 @@ This FNF Engine/Rewrite aims to recreate the feel and looks of Friday Night Funk
 ## Special Thanks
 - SomeGuyWhoLovesCoding - Conductor class. Check out [Funkin' View!](https://github.com/SomeGuyWhoLovesCoding/FNF-PeoteView)  Shout-out to You, Swglfnf!
 - MaybeMaru - [Moonchart Libary](https://github.com/MaybeMaru/moonchart)
-- ACrazyTown - [Flixel-Waveform](https://github.com/ACrazyTown/flixel-waveform)
