@@ -1,0 +1,50 @@
+{
+  "icon": "bf-pixel",
+  "texture": "characters/bfPixel",
+  "scale": 6,
+
+  "cameraOffset": { "x": -50, "y": -60 },
+  "positionOffset": { "x": 0, "y": 350 },
+  "dancer": false,
+  "flipX": true,
+  "holdSteps": 4,
+  "antialiasing":false,
+
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "BF IDLE",
+      "fps": 24,
+      "looped": false,
+      "offset": { "x": 0, "y": 0 }
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "BF LEFT NOTE",
+      "fps": 24,
+      "looped": false,
+      "offset": { "x": 0, "y": 0 }
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "BF DOWN NOTE0",
+      "fps": 24,
+      "looped": false,
+      "offset": { "x": 0, "y": 0 }
+    },
+    {
+      "name": "singUP",
+      "prefix": "BF UP NOTE0",
+      "fps": 24,
+      "looped": false,
+      "offset": { "x": 0, "y": 0 }
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "BF RIGHT NOTE0",
+      "fps": 24,
+      "looped": false,
+      "offset": { "x": 0, "y": 0 }
+    }
+  ]
+}

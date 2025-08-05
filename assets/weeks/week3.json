@@ -1,0 +1,15 @@
+{
+    "name": "pico",
+    "weekIMG": "week3",
+    "songs": [
+        "Pico",
+        "Philly Nice",
+        "Blammed"
+    ],
+    "characters": [
+        "pico",
+        "bf",
+        "gf"
+    ],
+    "save_key": "week3"
+}

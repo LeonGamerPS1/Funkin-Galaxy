@@ -1,0 +1,14 @@
+{
+    "scale": 0.7,
+    "sustainScale":0.7,
+    "antialiasing": true,
+    "sus":70,
+    "fps": 24,
+    "name": "default",
+    "cover":{
+        "offsetX":-107,
+        "offsetY":-95,
+        "scaleX":1,
+        "scaleY":1
+    }
+}

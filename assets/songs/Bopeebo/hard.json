@@ -1,0 +1,1050 @@
+{
+  "speed": 1.3,
+  "composer": null,
+  "stage": null,
+  "players": ["dad", "gf", "bf"],
+  "charter": null,
+  "bpmMap": [],
+  "events": [
+    {
+      "name": "Camera Focus",
+      "time": 0,
+      "values": ["dad"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 2400,
+      "values": ["bf"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 4800,
+      "values": ["dad"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 7200,
+      "values": ["bf"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 9600,
+      "values": ["dad"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 12000,
+      "values": ["bf"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 14400,
+      "values": ["dad"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 16800,
+      "values": ["bf"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 19200,
+      "values": ["dad"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 21600,
+      "values": ["bf"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 24000,
+      "values": ["dad"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 26400,
+      "values": ["bf"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 28800,
+      "values": ["dad"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 31200,
+      "values": ["bf"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 33600,
+      "values": ["dad"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 36000,
+      "values": ["bf"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 38400,
+      "values": ["dad"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 40800,
+      "values": ["bf"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 43200,
+      "values": ["dad"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 45600,
+      "values": ["bf"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 48000,
+      "values": ["dad"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 50400,
+      "values": ["bf"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 52800,
+      "values": ["dad"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 55200,
+      "values": ["bf"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 57600,
+      "values": ["dad"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 60000,
+      "values": ["bf"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 62400,
+      "values": ["dad"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 64800,
+      "values": ["bf"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 67200,
+      "values": ["dad"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 69600,
+      "values": ["bf"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 72000,
+      "values": ["dad"]
+    },
+    {
+      "name": "Camera Focus",
+      "time": 74400,
+      "values": ["bf"]
+    }
+  ],
+  "notes": [
+    {
+      "data": 2,
+      "length": 0,
+      "strumLine": 0,
+      "time": 0,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 600,
+      "strumLine": 0,
+      "time": 600,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 600,
+      "strumLine": 0,
+      "time": 1200,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 0,
+      "strumLine": 1,
+      "time": 2400,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 600,
+      "strumLine": 1,
+      "time": 3000,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 600,
+      "strumLine": 1,
+      "time": 3600,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 300,
+      "strumLine": 0,
+      "time": 4800,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 300,
+      "strumLine": 0,
+      "time": 5400,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 600,
+      "strumLine": 0,
+      "time": 6000,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 300,
+      "strumLine": 1,
+      "time": 7200,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 300,
+      "strumLine": 1,
+      "time": 7800,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 600,
+      "strumLine": 1,
+      "time": 8400,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 300,
+      "strumLine": 0,
+      "time": 9600,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 0,
+      "strumLine": 0,
+      "time": 10200,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 0,
+      "strumLine": 0,
+      "time": 10500,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 600,
+      "strumLine": 0,
+      "time": 10800,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 300,
+      "strumLine": 1,
+      "time": 12000,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 0,
+      "strumLine": 1,
+      "time": 12600,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 0,
+      "strumLine": 1,
+      "time": 12900,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 600,
+      "strumLine": 1,
+      "time": 13200,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 0,
+      "strumLine": 0,
+      "time": 14400,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 0,
+      "strumLine": 0,
+      "time": 14700,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 0,
+      "strumLine": 0,
+      "time": 15300,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 600,
+      "strumLine": 0,
+      "time": 15600,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 0,
+      "strumLine": 1,
+      "time": 16800,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 0,
+      "strumLine": 1,
+      "time": 17100,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 0,
+      "strumLine": 1,
+      "time": 17700,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 600,
+      "strumLine": 1,
+      "time": 18000,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 0,
+      "strumLine": 0,
+      "time": 19200,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 0,
+      "strumLine": 0,
+      "time": 19500,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 900,
+      "strumLine": 0,
+      "time": 19800,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 0,
+      "strumLine": 1,
+      "time": 21600,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 0,
+      "strumLine": 1,
+      "time": 21900,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 900,
+      "strumLine": 1,
+      "time": 22200,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 0,
+      "strumLine": 0,
+      "time": 24000,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 0,
+      "strumLine": 0,
+      "time": 24300,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 900,
+      "strumLine": 0,
+      "time": 24600,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 0,
+      "strumLine": 1,
+      "time": 26400,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 0,
+      "strumLine": 1,
+      "time": 26700,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 900,
+      "strumLine": 1,
+      "time": 27000,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 0,
+      "strumLine": 0,
+      "time": 28800,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 0,
+      "strumLine": 0,
+      "time": 29100,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 1200,
+      "strumLine": 0,
+      "time": 29400,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 0,
+      "strumLine": 1,
+      "time": 31200,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 0,
+      "strumLine": 1,
+      "time": 31500,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 1200,
+      "strumLine": 1,
+      "time": 31800,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 0,
+      "strumLine": 0,
+      "time": 33300,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 0,
+      "strumLine": 0,
+      "time": 33600,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 0,
+      "strumLine": 0,
+      "time": 33900,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 0,
+      "strumLine": 0,
+      "time": 34500,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 0,
+      "strumLine": 0,
+      "time": 34575,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 600,
+      "strumLine": 0,
+      "time": 34800,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 0,
+      "strumLine": 1,
+      "time": 35700,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 0,
+      "strumLine": 1,
+      "time": 36000,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 0,
+      "strumLine": 1,
+      "time": 36300,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 0,
+      "strumLine": 1,
+      "time": 36900,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 0,
+      "strumLine": 1,
+      "time": 36975,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 600,
+      "strumLine": 1,
+      "time": 37200,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 450,
+      "strumLine": 0,
+      "time": 38400,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 300,
+      "strumLine": 0,
+      "time": 39000,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 600,
+      "strumLine": 0,
+      "time": 39600,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 450,
+      "strumLine": 1,
+      "time": 40800,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 300,
+      "strumLine": 1,
+      "time": 41400,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 600,
+      "strumLine": 1,
+      "time": 42000,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 0,
+      "strumLine": 0,
+      "time": 43200,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 0,
+      "strumLine": 0,
+      "time": 43800,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 0,
+      "strumLine": 0,
+      "time": 44400,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 0,
+      "strumLine": 0,
+      "time": 44550,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 0,
+      "strumLine": 0,
+      "time": 44700,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 0,
+      "strumLine": 0,
+      "time": 45000,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 0,
+      "strumLine": 1,
+      "time": 45600,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 0,
+      "strumLine": 1,
+      "time": 46200,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 0,
+      "strumLine": 1,
+      "time": 46800,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 0,
+      "strumLine": 1,
+      "time": 46950,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 0,
+      "strumLine": 1,
+      "time": 47100,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 0,
+      "strumLine": 1,
+      "time": 47400,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 450,
+      "strumLine": 0,
+      "time": 48000,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 300,
+      "strumLine": 0,
+      "time": 48600,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 450,
+      "strumLine": 0,
+      "time": 49200,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 450,
+      "strumLine": 1,
+      "time": 50400,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 300,
+      "strumLine": 1,
+      "time": 51000,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 450,
+      "strumLine": 1,
+      "time": 51600,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 1800,
+      "strumLine": 0,
+      "time": 52800,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 1800,
+      "strumLine": 1,
+      "time": 55200,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 0,
+      "strumLine": 0,
+      "time": 57600,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 0,
+      "strumLine": 0,
+      "time": 57900,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 1200,
+      "strumLine": 0,
+      "time": 58200,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 0,
+      "strumLine": 1,
+      "time": 60000,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 0,
+      "strumLine": 1,
+      "time": 60300,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 1200,
+      "strumLine": 1,
+      "time": 60600,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 0,
+      "strumLine": 0,
+      "time": 62100,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 0,
+      "strumLine": 0,
+      "time": 62400,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 0,
+      "strumLine": 0,
+      "time": 62700,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 0,
+      "strumLine": 0,
+      "time": 63300,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 0,
+      "strumLine": 0,
+      "time": 63375,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 600,
+      "strumLine": 0,
+      "time": 63600,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 0,
+      "strumLine": 1,
+      "time": 64500,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 0,
+      "strumLine": 1,
+      "time": 64800,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 0,
+      "strumLine": 1,
+      "time": 65100,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 0,
+      "strumLine": 1,
+      "time": 65700,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 0,
+      "strumLine": 1,
+      "time": 65775,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 600,
+      "strumLine": 1,
+      "time": 66000,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 0,
+      "strumLine": 0,
+      "time": 67200,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 0,
+      "strumLine": 0,
+      "time": 67500,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 0,
+      "strumLine": 0,
+      "time": 67800,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 0,
+      "strumLine": 0,
+      "time": 68100,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 600,
+      "strumLine": 0,
+      "time": 68400,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 0,
+      "strumLine": 1,
+      "time": 69600,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 0,
+      "strumLine": 1,
+      "time": 69900,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 0,
+      "strumLine": 1,
+      "time": 70200,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 0,
+      "strumLine": 1,
+      "time": 70500,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 600,
+      "strumLine": 1,
+      "time": 70800,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 0,
+      "strumLine": 0,
+      "time": 71700,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 0,
+      "strumLine": 0,
+      "time": 72000,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 0,
+      "strumLine": 0,
+      "time": 72300,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 0,
+      "strumLine": 0,
+      "time": 72900,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 0,
+      "strumLine": 0,
+      "time": 72975,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 600,
+      "strumLine": 0,
+      "time": 73200,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 0,
+      "strumLine": 1,
+      "time": 74100,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 0,
+      "strumLine": 1,
+      "time": 74400,
+      "type": "normal"
+    },
+    {
+      "data": 3,
+      "length": 0,
+      "strumLine": 1,
+      "time": 74700,
+      "type": "normal"
+    },
+    {
+      "data": 2,
+      "length": 0,
+      "strumLine": 1,
+      "time": 75300,
+      "type": "normal"
+    },
+    {
+      "data": 0,
+      "length": 0,
+      "strumLine": 1,
+      "time": 75375,
+      "type": "normal"
+    },
+    {
+      "data": 1,
+      "length": 600,
+      "strumLine": 1,
+      "time": 75600,
+      "type": "normal"
+    }
+  ],
+  "bpm": 100,
+  "tracks": {
+    "extra": [
+      "songs/Bopeebo/Voices-Opponent.ogg",
+      "songs/Bopeebo/Voices-Player.ogg"
+    ],
+    "main": "songs/Bopeebo/Inst.ogg"
+  },
+  "displayName": "Bopeebo",
+  "songName": "Bopeebo"
+}

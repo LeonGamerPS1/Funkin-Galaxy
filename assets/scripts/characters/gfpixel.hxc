@@ -1,0 +1,45 @@
+
+
+import funkin.play.character.BaseCharacter;
+import flixel.FlxSprite;
+import flixel.FlxG;
+import funkin.backend.Paths;
+
+class Gfpixel extends BaseCharacter
+{
+    public var speaker:FlxSprite;
+
+
+
+   
+    public function update(elapsed:Float) {
+        if(speaker == null) {
+            speaker = new FlxSprite(0,0);
+            speaker.frames = Paths.getSparrowAtlas('speaker-pixel');
+            speaker.animation.addByPrefix('bop','GF IDLE',24,false);
+            speaker.animation.play('bop',true);
+             speaker.scale.set(6,6);
+             speaker.offset.set(0,0);
+        }
+        super.update(elapsed);
+        speaker.update(elapsed);
+        speaker.x = x;
+        speaker.y = y;
+        
+       
+        speaker.antialiasing = antialiasing;
+    }
+
+    public function draw() {
+        speaker.draw();
+        speaker.scrollFactor.set(scrollFactor.x,scrollFactor.y);
+        super.draw();
+    }
+
+    public function dance(b:Float) {
+        super.dance(b);
+        speaker.animation.play('bop',true);
+        speaker.offset.set(0,0);
+    }
+  
+}

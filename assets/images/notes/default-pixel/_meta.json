@@ -1,0 +1,14 @@
+{
+    "scale": 6,
+    "antialiasing": false,
+    "sustainScale": 5,
+    "fps": 24,
+    "sus":100,
+    "name": "pixel",
+      "cover":{
+        "offsetX":115.5,
+        "offsetY":24.2,
+        "scaleX":6,
+        "scaleY":6
+    }
+}

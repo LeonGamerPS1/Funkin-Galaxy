@@ -1,54 +1,50 @@
 {
-  "name": "bf",
-  "texture_path": "bf",
-  "health_icon": "bf",
-  "health_colors": [128, 0, 128],
+  "icon": "bf",
+  "texture": "characters/BOYFRIEND",
+  "scale": 1,
+
+  "cameraOffset": { "x": 0, "y": 0 },
+  "positionOffset": { "x": 0, "y": 350 },
+  "dancer": false,
   "flipX": true,
+  "holdSteps": 4.02,
+  "antialiasing":true,
+
   "animations": [
     {
       "name": "idle",
-      "prefix": "BF idle dance",
+      "prefix": "BF idle dance0",
       "fps": 24,
       "looped": false,
-      "x": 5,
-      "y": 0
+      "offset": { "x": -5, "y": 0 }
     },
     {
       "name": "singLEFT",
       "prefix": "BF NOTE LEFT0",
       "fps": 24,
       "looped": false,
-      "x": 5,
-      "y": -6
+      "offset": { "x": 5, "y": -6 }
     },
     {
       "name": "singDOWN",
       "prefix": "BF NOTE DOWN0",
       "fps": 24,
       "looped": false,
-      "x": -20,
-      "y": -51
+      "offset": { "x": -20, "y": -51 }
     },
     {
       "name": "singUP",
       "prefix": "BF NOTE UP0",
       "fps": 24,
       "looped": false,
-      "x": -46,
-      "y": 27
+      "offset": { "x": -46, "y": 27 }
     },
     {
       "name": "singRIGHT",
       "prefix": "BF NOTE RIGHT0",
       "fps": 24,
       "looped": false,
-      "x": -48,
-      "y": -7
+      "offset": { "x": -48, "y": -7 }
     }
-  ],
-  "position": [0, 350],
-  "camera_position": [0, 0],
-  "scale": 1,
-  "dancer": false,
-  "singDuration": 6
+  ]
 }

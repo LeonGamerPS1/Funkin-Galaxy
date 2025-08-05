@@ -11,9 +11,10 @@
 		}
 	},
 	"haxe.enableExtendedIndentation": true,
-	"workbench.colorCustomizations": {
-		"titleBar.activeBackground": "#4e4f53dd",
-		"activityBar.background": "#424347aa"
-	},
-	"window.title": "${dirty}${activeEditorShort}${separator}${rootName}${separator}${profileName}${separator}${appName}${separator}[Branch: main]"
+	"files.exclude": {
+		"**/*.rpyc": true,
+		"**/*.rpa": true,
+		"**/*.rpymc": true,
+		"**/cache/": true
+	}
 }

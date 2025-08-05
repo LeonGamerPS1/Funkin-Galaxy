@@ -1,0 +1,50 @@
+{
+  "icon": "spirit-pixel",
+  "texture": "characters/spirit",
+  "scale": 6,
+
+  "cameraOffset": { "x": 0, "y": 0 },
+  "positionOffset": { "x": -150, "y": 100 },
+  "dancer": false,
+  "flipX": false,
+  "holdSteps": 4,
+  "antialiasing":false,
+
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "idle spirit_",
+      "fps": 24,
+      "looped": false,
+      "offset": { "x": -218, "y": -280 }
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "left_",
+      "fps": 24,
+      "looped": false,
+      "offset": { "x": -200, "y": -280 }
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "spirit down_",
+      "fps": 24,
+      "looped": false,
+      "offset": { "x": 170, "y": 110 }
+    },
+    {
+      "name": "singUP",
+      "prefix": "up_",
+      "fps": 24,
+      "looped": false,
+      "offset": { "x": -220, "y": -240 }
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "right_",
+      "fps": 24,
+      "looped": false,
+      "offset": { "x": -220, "y": -280 }
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+- fucking reorganize shit [x]
+- add week 6 erect mixes (senpai,roses and thorns) []
+- menus ??? []

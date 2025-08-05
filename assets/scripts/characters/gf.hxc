@@ -1,0 +1,43 @@
+
+
+import funkin.play.character.BaseCharacter;
+import flixel.FlxSprite;
+import flixel.FlxG;
+import funkin.backend.Paths;
+
+class Gf extends BaseCharacter
+{
+    public var speaker:FlxSprite;
+
+
+
+   
+    public function update(elapsed:Float) {
+        if(speaker == null) {
+            speaker = new FlxSprite(0,0);
+            speaker.frames = Paths.getSparrowAtlas('speaker');
+            speaker.animation.addByPrefix('bop','stereo boom',24,false);
+            speaker.animation.play('bop',true);
+            speaker.updateHitbox();
+        }
+        super.update(elapsed);
+        speaker.update(elapsed);
+        speaker.x = x - 145;
+        speaker.y = y + 310;
+        speaker.antialiasing = antialiasing;
+    }
+
+    public function draw() {
+        speaker.draw();
+        speaker.scrollFactor.set(scrollFactor.x,scrollFactor.y);
+        super.draw();
+    }
+
+    public function dance(b:Float) {
+        super.dance(b);
+        speaker.animation.play('bop',true);
+        speaker.centerOrigin();
+        speaker.centerOffsets();
+    }
+  
+}
