@@ -31,7 +31,7 @@ class Main extends Sprite
 		Toolkit.theme = "dark";
 		Toolkit.init();
 		#end
-		addChild(new FlxGame(0, 0, InitState, 120, 120));
+		addChild(new FlxGame(0, 0, InitState));
 		#if polymod
 		Poly.reload();
 		#end
