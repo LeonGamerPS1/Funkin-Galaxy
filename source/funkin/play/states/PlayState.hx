@@ -1,5 +1,6 @@
 package funkin.play.states;
 
+import funkin.scripted.ScriptedStage;
 import openfl.display.Bitmap;
 import openfl.system.System;
 
@@ -72,19 +73,30 @@ class PlayState extends FlxUIState implements IStageState
 		opponentCameraOffset = jsStage.dadCam;
 		girlfriendCameraOffset = jsStage.gfCam;
 
+		for (stage in ScriptedStage.listScriptClasses())
+		{
+			if (stage.toLowerCase() == curStage.toLowerCase())
+			{
+				var stage = ScriptedStage.init(stage, this, false);
+				stage.create();
+				addStage(stage);
+				return;
+			}
+		}
+
 		switch (curStage)
 		{
 			case 'stage':
-				addStage(new Week1(this, true, null));
+				addStage(new Week1(this, true));
 			case 'spooky':
-				addStage(new Week2(this, true, null));
+				addStage(new Week2(this, true));
 
 			case 'school':
-				addStage(new Week6(this, true, null));
+				addStage(new Week6(this, true));
 			case 'schoolErect':
-				addStage(new Week6Erect(this, true, null));
+				addStage(new Week6Erect(this, true));
 			case 'schoolEvil':
-				addStage(new Week6Evil(this, true, null));
+				addStage(new Week6Evil(this, true));
 		}
 	}
 
@@ -204,7 +216,6 @@ class PlayState extends FlxUIState implements IStageState
 		genC();
 
 		startCallback();
-
 	}
 
 	public var bf:BaseCharacter;
@@ -448,18 +459,18 @@ class PlayState extends FlxUIState implements IStageState
 			if (_ != tracks.get('main') && Math.abs(_.time - tracks.get('main').time) > 40 && tracks.get('main').playing)
 				_.time = tracks.get('main').time;
 		super.update(elapsed);
-		var wid:Float = FlxMath.lerp(150, iconP1.width, Math.exp(-elapsed * 8));
-		iconP1.setGraphicSize(wid);
+		var wid:Float = FlxMath.lerp(1, iconP1.scale.x, 0.825);
+		iconP1.scale.set(wid, wid);
 		iconP1.updateHitbox();
 
-		var wid:Float = FlxMath.lerp(150, iconP2.width, Math.exp(-elapsed * 8));
-		iconP2.setGraphicSize(wid);
+		var wid:Float = FlxMath.lerp(1, iconP2.scale.x, 0.825);
+		iconP2.scale.set(wid, wid);
 		iconP2.updateHitbox();
 
 		var barCenter:Float = get_center();
 		var iconOffset:Int = 26;
-		iconP1.x = barCenter + (150 * 1 - 150) / 2 - iconOffset;
-		iconP2.x = barCenter - (150 * 1) / 2 - iconOffset * 2;
+		iconP1.x = barCenter + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
+		iconP2.x = barCenter - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
 		iconP1.y = healthBar.y - (iconP1.height / 2);
 		iconP2.y = healthBar.y - (iconP2.height / 2);
 
@@ -507,6 +518,7 @@ class PlayState extends FlxUIState implements IStageState
 	{
 		startedCountdown = true;
 		tracks.set('main', FlxG.sound.load(Paths.getAssetPath(song.tracks.main)));
+		tracks.get('main').onComplete = endSong;
 		for (track_ in song.tracks.extra)
 		{
 			if (!Paths.exists(Paths.getAssetPath(track_)))

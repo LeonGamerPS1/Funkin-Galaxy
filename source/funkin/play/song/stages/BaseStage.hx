@@ -11,7 +11,7 @@ class BaseStage extends FlxBasic
 	public var curBeat:Float = 0;
 	public var curSection:Float = 0;
 
-	public function new(parentState:FlxState, autoCreate:Bool = false, ?classname:String = '') // class name is for scripted stages ok
+	public function new(parentState:FlxState, autoCreate:Bool = false) // class name is for scripted stages ok
 	{
 		super();
 		parent = parentState;
@@ -19,7 +19,7 @@ class BaseStage extends FlxBasic
 			cast(parent, IStageState).addStage(this);
 		parent.add(this);
 
-		if (autoCreate == true)
+		// if (autoCreate == true)
 			create();
 	}
 

@@ -53,7 +53,7 @@ class Sustain extends TiledSprite
 		if (parent.wasGoodHit)
 			length -= Math.abs(parent.noteData.time - Conductor.instance.time);
 
-		var expectedHeight:Float = (length * 0.45 * parent.speed) - 50;
+		var expectedHeight:Float = (length * 0.45 * parent.speed);
 		if (custom > 0)
 			expectedHeight = custom;
 

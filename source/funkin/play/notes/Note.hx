@@ -147,6 +147,7 @@ class Note extends FlxSprite
 		this.noteData = noteData;
 		editing = false;
 		flipSustain = false;
+
 		speed = 1;
 		selected = false;
 		holdTime = 0;

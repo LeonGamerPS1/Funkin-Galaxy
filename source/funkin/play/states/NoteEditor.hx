@@ -27,9 +27,15 @@ class NoteEditor extends FlxUIState
 	public var inst:FlxSound;
 	public var paused:Bool = true;
 	public var destroyOnReload:FlxGroup = new FlxGroup();
+	public var camHUD:FlxCamera;
 
 	public override function create():Void
 	{
+		camHUD = new FlxCamera();
+		camHUD.zoom = 1;
+		camHUD.bgColor = FlxColor.fromRGBFloat(0, 0, 0, 0);
+		FlxG.cameras.add(camHUD, false);
+
 		Conductor.instance.reset(true);
 		Conductor.instance.time = 0;
 
@@ -44,8 +50,7 @@ class NoteEditor extends FlxUIState
 		bg.color = FlxColor.GRAY;
 		add(bg);
 
-		gridBG = new FlxTiledSprite(FlxGridOverlay.createGrid(GRID_SIZE, GRID_SIZE, GRID_SIZE * 8, Math.floor(GRID_SIZE * 16), true, 0xFF616060, 0xFF252525),
-			GRID_SIZE * 12, GRID_SIZE * 16);
+		gridBG = new FlxTiledSprite(Paths.image('grid'), GRID_SIZE * 12, GRID_SIZE * 16);
 		gridBG.graphic.bitmap.disposeImage();
 		gridBG.screenCenter(X);
 		gridBG.x += GRID_SIZE * 2;
@@ -115,7 +120,9 @@ class NoteEditor extends FlxUIState
 
 		Conductor.instance.reset(true);
 		Conductor.instance.onBeat.add(beat);
+		Conductor.instance.onMeasure.add(sectionHit);
 		Conductor.instance.changeBpmAt(0, _song.bpm);
+		cams.push(camHUD);
 
 		for (track_ in _song.tracks.extra)
 		{
@@ -180,34 +187,35 @@ class NoteEditor extends FlxUIState
 
 	function regenGrid():Void
 	{
-		while (renderedNotes.length > 0)
-			for (i in renderedNotes)
-				renderedNotes.remove(i, true);
+		for (i in renderedNotes)
+			i.kill();
 
-		while (renderedSustains.length > 0)
-			for (i in renderedSustains)
-				renderedSustains.remove(i, true);
-
+		for (i in renderedSustains)
+			i.kill();
 		for (note in _song.notes)
 		{
+			final len = Conductor.instance.measureCrochet * 1.5;
+			if (!(note.time <= Conductor.instance.time + len && note.time >= Conductor.instance.time - len))
+				continue;
 			var strumline = [strumLineone, strumLinetwo, strumLinethree][note.strumLine % 3];
-			var noteObject:Note = new Note(note, strumline.strums.members[note.data].skin, strumline);
+			var noteObject:Note = cast renderedNotes.recycle(Note);
+			noteObject.strumLine = strumline;
+			noteObject.setup(note, strumline.strums.members[note.data].skin);
 			noteObject.scrollFactor.x = 0;
 
 			noteObject.x = (GRID_SIZE * note.data) + (GRID_SIZE * 4 * note.strumLine) + gridBG.x;
 			noteObject.y = getYfromStrum(note.time);
-			renderedNotes.add(noteObject);
 
 			if (noteObject.noteData.length > 0)
 			{
 				var sustainHeight:Float = Math.floor(FlxMath.remapToRange(note.length, 0, Conductor.instance.stepCrochet * 16, 0, NoteEditor.GRID_SIZE * 16));
-				var sustain:Sustain = new Sustain(noteObject);
+				var sustain:Sustain = cast renderedSustains.recycle(Sustain);
+				sustain.init(noteObject);
 				@:privateAccess
 				sustain.parent = noteObject;
 				@:privateAccess
 				sustain.custom = sustainHeight;
 				sustain.scrollFactor.x = 0;
-				renderedSustains.add(sustain);
 			}
 		}
 	}
@@ -215,6 +223,11 @@ class NoteEditor extends FlxUIState
 	function getStrumTime(yPos:Float):Float
 	{
 		return FlxMath.remapToRange(yPos, gridBG.y, gridBG.y + (GRID_SIZE * 16), 0, 16 * Conductor.instance.stepCrochet);
+	}
+
+	public function sectionHit(f:Float)
+	{
+		regenGrid();
 	}
 
 	function getYfromStrum(strumTime:Float):Float
@@ -274,7 +287,7 @@ class NoteEditor extends FlxUIState
 			else
 				FlxColorTransformUtil.setMultipliers(note.colorTransform, 1, 1, 1, note.alpha);
 
-			if (note.noteData.time <= Conductor.instance.time && note.alpha > 0.999)
+			if (note.noteData.time <= Conductor.instance.time && note.alpha > 0.9)
 			{
 				note.alpha = 0.8;
 				if (!paused)
@@ -364,9 +377,32 @@ class NoteEditor extends FlxUIState
 			PlayState.song = _song;
 			FlxG.switchState(new PlayState());
 		}
+		if (Controls.instance.justPressed.UI_BACK)
+		{
+			paused = true;
+			inst.pause();
+			for (_ in tracks)
+				_.pause();
+			var editor = new EditorPlayState(_song);
+			editor.cameras = cams;
+			camHUD.bgColor = FlxColor.fromRGBFloat(0, 0, 0, 0.7);
+			Conductor.instance.onBeat.remove(beat);
+			Conductor.instance.onMeasure.remove(sectionHit);
+			openSubState(editor);
+		}
 	}
 
+	var cams = [];
+
 	public var __selected:NoteData = null;
+
+	override function closeSubState()
+	{
+		super.closeSubState();
+		camHUD.bgColor = FlxColor.fromRGBFloat(0, 0, 0, 0);
+		Conductor.instance.onBeat.add(beat);
+		Conductor.instance.onMeasure.add(sectionHit);
+	}
 
 	public function adjustSustain(msAdjust:Float = 0)
 	{

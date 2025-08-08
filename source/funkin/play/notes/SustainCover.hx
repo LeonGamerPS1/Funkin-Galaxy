@@ -40,7 +40,7 @@ class SustainCover extends FlxSprite
 
 
 		scale.set(parent.skinData.cover.scaleX, parent.skinData.cover.scaleY);
-		setPosition(parent.x + parent.skinData.cover.offsetX, parent.y + parent.skinData.cover.offsetY - (height / 2));
+		setPosition(parent.x + parent.skinData.cover.offsetX, parent.y + parent.skinData.cover.offsetY);
 		super.draw();
 	}
 }

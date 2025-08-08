@@ -15,7 +15,7 @@ class Poly
 {
 	static final MOD_DIR:String = 'mods';
 	static final CORE_DIR:String = 'assets';
-	static final API_VERSION:String = '1.0.0';
+	static final API_VERSION:String = '0.1.0';
 
 	#if polymod
 	private static final extensions:Map<String, PolymodAssetType> = [
@@ -52,8 +52,22 @@ class Poly
 		#end
 		Polymod.clearCache();
 		Polymod.clearScripts();
+		@:privateAccess {
+			for (path => img in Paths.images)
+			{
+				openfl.Assets.cache.clear(path);
+				FlxG.bitmap.remove(img);
+
+				img.bitmap.dispose();
+				img.destroy();
+				img = null;
+				Paths.images.remove(path);
+			}
+		}
 		Polymod.addDefaultImport(FlxSprite);
 		Polymod.addDefaultImport(BaseCharacter);
+		Polymod.addDefaultImport(Paths);
+		Polymod.addDefaultImport(CoolUtil);
 
 		var loadedModlist:Array<ModMetadata> = Polymod.init({
 			modRoot: MOD_DIR,

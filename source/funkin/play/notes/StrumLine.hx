@@ -131,14 +131,14 @@ class StrumLine extends FlxSpriteGroup
 
 			if (cpu && (note.noteData.time <= Conductor.instance.time) && !note.ignoreNote)
 			{
-				strum.playAnim('confirm', !note.wasGoodHit);
+				strum.playAnim('confirm', true);
 
-				// if (!note.wasGoodHit)
-				//	spawnSplash(note.noteData.data);
+				if (!note.wasGoodHit)
+					spawnSplash(note.noteData.data);
 				if (character != null)
-					character.sing(note, !note.wasGoodHit);
+					character.sing(note, true);
 
-				strum.r = 0.15;
+				strum.r = 0.3;
 				hitSignal(note);
 				if (note.noteData.length > 0)
 				{
@@ -149,7 +149,7 @@ class StrumLine extends FlxSpriteGroup
 				note.wasGoodHit = true;
 			}
 
-			if (note.noteData.time < Conductor.instance.time - (350 / songSpeed) && !note.wasGoodHit)
+			if (note.noteData.time < Conductor.instance.time - (350) && !note.wasGoodHit)
 			{
 				if (!cpu && !note.wasGoodHit && !note.ignoreNote)
 					miss(note.noteData.data);
@@ -175,9 +175,10 @@ class StrumLine extends FlxSpriteGroup
 			{
 				if (note.noteData.length > 0)
 				{
-
 					strum.active = true;
 					strum.cover.visible = !cpu;
+					if (!cpu)
+						strum.playAnim('press', true);
 					if (!cpu)
 						strum.cover.animation.play('end', true);
 				}
@@ -210,7 +211,7 @@ class StrumLine extends FlxSpriteGroup
 			hitNotes.remove(i);
 		for (i in directions)
 			directions.remove(i);
-		
+
 		// fuck this  shitty function name!
 		keyPress = [
 			Controls.instance.justPressed.NOTE_LEFT,
@@ -255,7 +256,8 @@ class StrumLine extends FlxSpriteGroup
 				strum.playAnim('press', true);
 			else if (!keyHold[strum.data])
 			{
-				strum.cover.visible = false;
+				if (strum.cover.animation.name != 'end')
+					strum.cover.visible = false;
 				strum.playAnim('static', false);
 			}
 		});
@@ -291,10 +293,10 @@ class StrumLine extends FlxSpriteGroup
 	function playerHit(shittNo:Note)
 	{
 		var strum = strums.members[shittNo.noteData.data % strums.length];
-		strum.playAnim('confirm', !shittNo.wasGoodHit);
+		strum.playAnim('confirm', true);
 
 		if (character != null)
-			character.sing(shittNo, !shittNo.wasGoodHit);
+			character.sing(shittNo, true);
 
 		if (shittNo.noteData.length > 0)
 		{
@@ -310,6 +312,6 @@ class StrumLine extends FlxSpriteGroup
 	{
 		if (character != null && (cpu || !cpu && !keyHold.contains(true)))
 			character.dance(beat);
-		notes.sort(sortNotesByTimeHelper, FlxSort.DESCENDING);
+
 	}
 }

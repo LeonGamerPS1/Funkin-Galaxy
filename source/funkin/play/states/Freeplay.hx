@@ -80,6 +80,8 @@ class Freeplay extends FlxUIState
 				DiffSubState.diffs = currentItem.week.diffs;
             DiffSubState.songName = currentItem.text;
 
+			FlxG.camera.scroll.set();
+			FlxG.camera.target = null;
             openSubState(new DiffSubState());
 		}
 		super.update(elapsed);
