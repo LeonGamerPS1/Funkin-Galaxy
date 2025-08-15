@@ -16,6 +16,7 @@ class Note extends FlxSprite
 	public var speed:Float = 1;
 	public var sustain:Sustain;
 	public var selected:Bool = false;
+	public var isHold:Bool = false;
 
 	public function new(?noteData:NoteData, ?texture:String = "default", ?strumLine:StrumLine)
 	{
@@ -43,7 +44,9 @@ class Note extends FlxSprite
 	{
 		if (noteData == null)
 			return this;
+
 		skin ??= this.skin;
+		@:privateAccess this.skin = skin;
 		var skinData = parseSkin(skin);
 		var data = noteData.data;
 		this.skinData = skinData;
@@ -59,9 +62,38 @@ class Note extends FlxSprite
 		scale.x *= sizeMult;
 		scale.y *= sizeMult;
 		updateHitbox();
+
 		antialiasing = skinData.antialiasing;
+		if (isHold && prevNote != null)
+		{
+			set.x = width / 2;
+			set.y = height / 2;
+			playAnim('end');
+			scale.set(skinData.scale, skinData.scale);
+			scale.x *= sizeMult;
+			scale.y *= sizeMult;
+			multAlpha = 0.7;
+			updateHitbox();
+			set.x -= width / 2;
+
+			if (prevNote.isHold)
+			{
+				prevNote.playAnim('hold');
+				prevNote.scale.x *= sizeMult;
+				prevNote.scale.y *= sizeMult;
+				prevNote.updateHitbox();
+			}
+		}
 		return this;
 	}
+
+	public function updateSustainClip()
+		if (wasGoodHit)
+		{
+			var t = FlxMath.bound((Conductor.instance.time - noteData.time) / height * 0.45 * speed, 0, 1);
+			var rect = clipRect == null ? FlxRect.get() : clipRect;
+			clipRect = rect.set(0, frameHeight * t, frameWidth, frameHeight * (1 - t));
+		}
 
 	public var skinData(default, null):Dynamic;
 
@@ -117,15 +149,24 @@ class Note extends FlxSprite
 		distance = (0.45 * (Conductor.instance.time - noteData.time) * speed);
 
 		downScroll = myStrum.downScroll;
+
 		if (!myStrum.downScroll)
 			distance *= -1;
 
 		var angleDir = strumDirection * Math.PI / 180;
 
 		angle = strumAngle;
+		if (isHold)
+		{
+			angle = strumDirection - 90;
+			flipY = downScroll;
+		}
 		alpha = strumAlpha * multAlpha;
-		x = strumX + set.x + Math.cos(angleDir) * distance;
-		y = strumY + set.y + Math.sin(angleDir) * distance;
+		x = strumX + Math.cos(angleDir) * distance;
+		y = strumY + Math.sin(angleDir) * distance;
+		x += set.x;
+		y += set.y * (downScroll ? -1 : 1);
+		
 	}
 
 	function get_sustainAngle():Float
@@ -139,8 +180,15 @@ class Note extends FlxSprite
 		super.kill();
 	}
 
-	public function setup(noteData:NoteData, ?skinName:String = "default")
+	public var prevNote:Note;
+
+	public function setup(noteData:NoteData, ?skinName:String = "default", isHold:Bool = false)
 	{
+		if (isHold)
+		{
+			origin.y = 0;
+			offset.y = 0;
+		}
 		visible = true;
 		revive();
 		wasGoodHit = false;
@@ -153,7 +201,9 @@ class Note extends FlxSprite
 		holdTime = 0;
 		downScroll = false;
 		set.set();
+		this.isHold = isHold;
 
 		return reload(skinName);
 	}
+
 }

@@ -69,21 +69,20 @@ class EditorPlayState extends FlxUISubState
 	// stolen from playstate lol
 	function genC()
 	{
-		//for (_ in song.events)
-		//	eventNotes.push(_);
+
 		for (noteData in song.notes)
 		{
-            if(Conductor.instance.time - 350  > (noteData.time + noteData.length)  )
-                continue;
-			var line = strumLines[noteData.strumLine];
-			line.unspawnNotes.push(noteData);
+			var line = strumLines[noteData.strumLine % strumLines.length];
+			var note:Note = new Note();
+			note.strumLine = line;
+			note.setup(noteData, line.strums.members[noteData.data % line.strums.length].skin);
+			line.unspawnNotes.push(note);
 		}
 		for (_ in strumLines)
 		{
-            
 			_.unspawnNotes.sort((d_, d_2) ->
 			{
-				return Math.floor(d_.time - d_2.time);
+				return Math.floor(d_.noteData.time - d_2.noteData.time);
 			});
 		}
 	}

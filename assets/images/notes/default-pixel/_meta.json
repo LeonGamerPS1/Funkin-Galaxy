@@ -1,7 +1,7 @@
 {
     "scale": 6,
     "antialiasing": false,
-    "sustainScale": 5,
+    "sustainScale": 6,
     "fps": 24,
     "sus":100,
     "name": "pixel",

@@ -48,6 +48,13 @@
       "ref": "--skip-dependencies",
       "url": "https://github.com/haxeui/haxeui-flixel"
     },
+     {
+      "name": "funkin-modchart",
+      "type": "git",
+      "dir": null,
+      "ref": "dev",
+      "url": "https://github.com/theoo-h/FunkinModchart.git"
+    },
     {
       "name": "hscript",
       "type": "haxelib",

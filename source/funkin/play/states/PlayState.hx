@@ -1,6 +1,8 @@
 package funkin.play.states;
 
 import funkin.scripted.ScriptedStage;
+import modchart.Config;
+import modchart.Manager;
 import openfl.display.Bitmap;
 import openfl.system.System;
 
@@ -73,6 +75,7 @@ class PlayState extends FlxUIState implements IStageState
 		opponentCameraOffset = jsStage.dadCam;
 		girlfriendCameraOffset = jsStage.gfCam;
 
+		#if polymod
 		for (stage in ScriptedStage.listScriptClasses())
 		{
 			if (stage.toLowerCase() == curStage.toLowerCase())
@@ -83,6 +86,7 @@ class PlayState extends FlxUIState implements IStageState
 				return;
 			}
 		}
+		#end
 
 		switch (curStage)
 		{
@@ -100,6 +104,8 @@ class PlayState extends FlxUIState implements IStageState
 		}
 	}
 
+	public var fnfmodchart:Manager;
+
 	override public function create()
 	{
 		FlxG.sound.music.fadeOut(0.4, 0);
@@ -112,6 +118,9 @@ class PlayState extends FlxUIState implements IStageState
 		Conductor.instance.onBeat.add(beat);
 		Conductor.instance.onStep.add(step);
 		Conductor.instance.onMeasure.add(section);
+		fnfmodchart = new Manager();
+		// Config.HOLDS_BEHIND_STRUM = true;
+		// Config.PREVENT_SCALED_HOLD_END = true;
 
 		var skin = 'default';
 		if (song.skin != null && song.skin.length > 0)
@@ -136,11 +145,11 @@ class PlayState extends FlxUIState implements IStageState
 
 		#if android downScroll = true; #end
 
-		dadStrums = new StrumLine(50, !downScroll ? 50 : FlxG.height - 150, downScroll, skin, #if (android) 0.5 #end);
+		dadStrums = new StrumLine(100, !downScroll ? 50 : FlxG.height - 150, downScroll, skin, #if (android) 0.5 #end);
 		strumLines.push(dadStrums);
 		ui.add(dadStrums);
 
-		plrStrums = new StrumLine(FlxG.width / 2 + 50, dadStrums.y, downScroll, skin);
+		plrStrums = new StrumLine(FlxG.width / 2 + 100, dadStrums.y, downScroll, skin);
 		strumLines.push(plrStrums);
 		plrStrums.cpu = false;
 		ui.add(plrStrums);
@@ -195,6 +204,9 @@ class PlayState extends FlxUIState implements IStageState
 		scoreText.setFormat(Paths.font('vcr.ttf'), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreText.scrollFactor.set();
 
+		for (icon in [iconP1, iconP2])
+			icon.cameras = [camOther];
+
 		ui.add(scoreText);
 
 		songSpeed = song.speed;
@@ -216,6 +228,9 @@ class PlayState extends FlxUIState implements IStageState
 		genC();
 
 		startCallback();
+		playbackRate = 1;
+
+		ui.insert(ui.members.indexOf(strumLines[0]), fnfmodchart);
 	}
 
 	public var bf:BaseCharacter;
@@ -391,7 +406,8 @@ class PlayState extends FlxUIState implements IStageState
 
 	public function hit(note:Note)
 	{
-		if (note.strumLine != null && !note.strumLine.cpu && !note.wasGoodHit)
+		// trace('e');
+		if (note.strumLine != null && !note.strumLine.cpu)
 		{
 			score += 150;
 			health += 0.04;
@@ -404,14 +420,42 @@ class PlayState extends FlxUIState implements IStageState
 			eventNotes.push(_);
 		for (noteData in song.notes)
 		{
-			var line = strumLines[noteData.strumLine];
-			line.unspawnNotes.push(noteData);
+			var line = strumLines[noteData.strumLine % strumLines.length];
+			var prevNote = function()
+			{
+				return line.unspawnNotes[line.unspawnNotes.length - 1];
+			};
+
+			var note:Note = new Note();
+			note.prevNote = prevNote();
+			note.strumLine = line;
+			note.setup(noteData, line.strums.members[noteData.data % line.strums.length].skin);
+			line.unspawnNotes.push(note);
+
+			if (noteData.length > 0)
+			{
+				for (mult in 0...Math.floor(noteData.length / Conductor.instance.stepCrochet))
+				{
+					var sustain:Note = new Note();
+					sustain.parent = note;
+					sustain.strumLine = line;
+					sustain.prevNote = prevNote();
+					sustain.setup({
+						time: noteData.time + (Conductor.instance.stepCrochet * mult) + 1,
+						data: noteData.data,
+						type: noteData.type,
+						length: 0,
+						strumLine: noteData.strumLine
+					}, note.skin, true);
+					line.unspawnNotes.push(sustain);
+				}
+			}
 		}
 		for (_ in strumLines)
 		{
 			_.unspawnNotes.sort((d_, d_2) ->
 			{
-				return Math.floor(d_.time - d_2.time);
+				return Math.floor(d_.noteData.time - d_2.noteData.time);
 			});
 		}
 	}
@@ -437,8 +481,8 @@ class PlayState extends FlxUIState implements IStageState
 		var scoreString:String = !plrStrums.cpu ? 'Score: $score' : 'Bot Play Enabled';
 		scoreText.text = scoreString;
 		// scoreText.screenCenter(X);
-		camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, Math.exp(-elapsed * 5));
-		FlxG.camera.zoom = FlxMath.lerp(defaultZoom, FlxG.camera.zoom, Math.exp(-elapsed * 5));
+		camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, 0.95);
+		FlxG.camera.zoom = FlxMath.lerp(defaultZoom, FlxG.camera.zoom, 0.95);
 
 		if (!startedSong)
 		{
@@ -452,27 +496,30 @@ class PlayState extends FlxUIState implements IStageState
 		else
 			Conductor.instance.time = tracks.get('main').time;
 
-		iconP1.animation.curAnim.curFrame = (healthBar.percent < 20) ? 1 : 0; // If health is under 20%, change player icon to frame 1 (losing icon), otherwise, frame 0 (normal)
-		iconP2.animation.curAnim.curFrame = (healthBar.percent > 80) ? 1 : 0; // If health is over 80%, change opponent icon to frame 1 (losing icon), otherwise, frame 0 (normal)
+		switch (healthBar.fillDirection)
+		{
+			default:
+				iconP1.animation.curAnim.curFrame = (healthBar.percent < 20) ? 1 : 0; // If health is under 20%, change player icon to frame 1 (losing icon), otherwise, frame 0 (normal)
+				iconP2.animation.curAnim.curFrame = (healthBar.percent > 80) ? 1 : 0; // If health is over 80%, change opponent icon to frame 1 (losing icon), otherwise, frame 0 (normal)
+			case LEFT_TO_RIGHT:
+				iconP1.animation.curAnim.curFrame = (healthBar.percent > 80) ? 1 : 0; // If health is under 20%, change player icon to frame 1 (losing icon), otherwise, frame 0 (normal)
+				iconP2.animation.curAnim.curFrame = (healthBar.percent < 20) ? 1 : 0; // If health is over 80%, change opponent icon to frame 1 (losing icon), otherwise, frame 0 (normal)
+		}
+
 		checkEventNote();
 		for (_ in tracks)
 			if (_ != tracks.get('main') && Math.abs(_.time - tracks.get('main').time) > 40 && tracks.get('main').playing)
 				_.time = tracks.get('main').time;
 		super.update(elapsed);
-		var wid:Float = FlxMath.lerp(1, iconP1.scale.x, 0.825);
-		iconP1.scale.set(wid, wid);
-		iconP1.updateHitbox();
 
-		var wid:Float = FlxMath.lerp(1, iconP2.scale.x, 0.825);
-		iconP2.scale.set(wid, wid);
-		iconP2.updateHitbox();
-
+		iconP1.lerpIconSize();
+		iconP2.lerpIconSize();
 		var barCenter:Float = get_center();
 		var iconOffset:Int = 26;
 		iconP1.x = barCenter + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
 		iconP2.x = barCenter - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
-		iconP1.y = healthBar.y - (iconP1.height / 2);
-		iconP2.y = healthBar.y - (iconP2.height / 2);
+		iconP1.y = healthBar.y - (iconP1.frameHeight / 2);
+		iconP2.y = healthBar.y - (iconP2.frameHeight / 2);
 
 		forEachStage((_) ->
 		{
@@ -592,7 +639,13 @@ class PlayState extends FlxUIState implements IStageState
 
 	function get_center():Float
 	{
-		return (healthBar != null ? healthBar.x - (healthBar.width * (healthBar.percent / 100)) + healthBar.width : 0);
+		switch (healthBar.fillDirection)
+		{
+			default:
+				return (healthBar != null ? healthBar.x - (healthBar.width * (healthBar.percent / 100)) + healthBar.width : 0);
+			case LEFT_TO_RIGHT:
+				return (healthBar != null ? (healthBar.x) + (healthBar.width * (healthBar.percent / 100)) : 0);
+		}
 	}
 
 	public function reboot() // empty
@@ -602,8 +655,10 @@ class PlayState extends FlxUIState implements IStageState
 
 	function set_playbackRate(value:Float):Float
 	{
+		#if (FLX_PITCH)
 		for (i in tracks)
 			i.pitch = value;
+		#end
 		Conductor.rate = value;
 		FlxG.timeScale = value;
 		return playbackRate = value;

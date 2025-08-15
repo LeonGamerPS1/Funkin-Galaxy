@@ -22,17 +22,22 @@ class SustainCover extends FlxSprite
 		animation.addByPrefix('start', 'start', 24);
 		animation.addByPrefix('end', 'end', 30, false);
 		animation.play('start');
-		visible = false;
+		active = false;
 		animation.onFinish.add((_) ->
 		{
 			if (_ == 'end')
 			{
 				animation.play('start', true);
-				visible = false;
+				active = false;
 			}
 		});
 	}
 
+	override function update(elapsed:Float)
+	{
+		visible = active;
+		super.update(elapsed);
+	}
 	override function draw()
 	{
 		centerOffsets();

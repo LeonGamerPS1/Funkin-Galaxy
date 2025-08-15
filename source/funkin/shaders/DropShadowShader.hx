@@ -453,6 +453,8 @@ class DropShadowShader extends FlxShader
 
 		useAltMask = false;
 
+
 		angOffset.value = [0];
+
 	}
 }

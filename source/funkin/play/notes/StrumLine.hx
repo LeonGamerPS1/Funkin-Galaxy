@@ -16,12 +16,11 @@ class StrumLine extends FlxSpriteGroup
 	public var covers:FlxTypedSpriteGroup<SustainCover>;
 	public var splashes:FlxTypedSpriteGroup<NoteSplash>;
 
-	public var unspawnNotes:Array<NoteData> = [];
+	public var unspawnNotes:Array<Note> = [];
 	public var cpu = true;
 	public var downScroll:Bool = false;
 	public var sk = null;
 	public var size:Float = 1;
-	public var sustains:FlxTypedSpriteGroup<Sustain>;
 
 	public function new(x:Float = 0, y:Float = 0, downScroll:Bool = false, skin:String = "default", sc:Float = 1)
 	{
@@ -34,11 +33,39 @@ class StrumLine extends FlxSpriteGroup
 		strums = new FlxTypedSpriteGroup<Strum>();
 		add(strums);
 
-		sustains = new FlxTypedSpriteGroup<Sustain>();
-		add(sustains);
-
 		notes = new FlxTypedSpriteGroup<Note>();
 		add(notes);
+
+		for (dirs in 0...2)
+		{
+			var note:Note = new Note();
+			note.strumLine = this;
+			note.ignoreNote = true;
+			note.setup({
+				data: dirs % 4,
+				time: -100000,
+				strumLine: 0,
+				length: 0,
+				type: "",
+			}, skin);
+			notes.add(note);
+			for (i in 0...2)
+			{
+				var sustain:Note = new Note();
+				sustain.strumLine = this;
+				sustain.parent = note;
+				sustain.ignoreNote = true;
+				sustain.prevNote = notes.members[notes.length - 1];
+				sustain.setup({
+					data: 2,
+					time: -100000,
+					strumLine: 0,
+					length: 0,
+					type: "",
+				}, skin, true);
+				notes.add(sustain);
+			}
+		}
 
 		covers = new FlxTypedSpriteGroup<SustainCover>();
 		add(covers);
@@ -97,27 +124,20 @@ class StrumLine extends FlxSpriteGroup
 	{
 		if (unspawnNotes[0] != null)
 		{
-			var time:Float = 3000;
+			var time:Float = 1500;
 			if (songSpeed < 1)
 				time /= songSpeed;
 
-			while (unspawnNotes.length > 0 && unspawnNotes[0].time - Conductor.instance.time < time)
+			while (unspawnNotes.length > 0 && unspawnNotes[0].noteData.time - Conductor.instance.time < time)
 			{
-				var dunceNote:Note = notes.recycle(Note);
-				dunceNote.strumLine = this;
-				dunceNote.setup(unspawnNotes[0], strums.members[unspawnNotes[0].data % strums.length].skin);
+				var dunceNote:Note = unspawnNotes[0];
+				notes.add(dunceNote);
 				dunceNote.setPosition(-6666, 6666); // prevent it from showing up at (0,0) for one frame then disappearing
 
-				if (dunceNote.noteData.length > 2)
-				{
-					var sustain:Sustain = sustains.recycle(Sustain).init(dunceNote);
-				}
-
 				unspawnNotes.remove(unspawnNotes[0]);
-				notes.sort(sortNotesByTimeHelper, FlxSort.DESCENDING);
 			}
 		}
-
+		notes.sort(sortNotesByTimeHelper, FlxSort.DESCENDING);
 		super.update(elapsed);
 
 		if (!cpu)
@@ -129,59 +149,29 @@ class StrumLine extends FlxSpriteGroup
 
 			note.followStrumNote(strum, songSpeed);
 
-			if (cpu && (note.noteData.time <= Conductor.instance.time) && !note.ignoreNote)
+			if (cpu
+				&& (note.noteData.time <= Conductor.instance.time || note.isHold && note.prevNote.wasGoodHit && note.canBeHit)
+				&& !note.ignoreNote
+				&& !note.wasGoodHit)
 			{
 				strum.playAnim('confirm', true);
 
-				if (!note.wasGoodHit)
-					spawnSplash(note.noteData.data);
 				if (character != null)
 					character.sing(note, true);
 
-				strum.r = 0.3;
+				strum.r = 0.15;
 				hitSignal(note);
-				if (note.noteData.length > 0)
-				{
-					strum.cover.visible = true;
-					strum.cover.animation.play('start');
-				}
 
 				note.wasGoodHit = true;
+				if (!note.isHold)
+					invalNote(note);
 			}
 
-			if (note.noteData.time < Conductor.instance.time - (350) && !note.wasGoodHit)
+			if (note.noteData.time < Conductor.instance.time - (350))
 			{
 				if (!cpu && !note.wasGoodHit && !note.ignoreNote)
 					miss(note.noteData.data);
 
-				invalNote(note);
-			}
-
-			if (note.wasGoodHit && !note.ignoreNote)
-			{
-				if (note.noteData.length > 0)
-					note.setPosition(strum.x, strum.y);
-				note.visible = false;
-
-				if (!cpu && !keyHold[note.noteData.data])
-					invalNote(note);
-				else if (!cpu && keyHold[note.noteData.data])
-				{
-					playerHit(note);
-				}
-			}
-
-			if (note.noteData.time + note.noteData.length < Conductor.instance.time && note.wasGoodHit && !note.ignoreNote)
-			{
-				if (note.noteData.length > 0)
-				{
-					strum.active = true;
-					strum.cover.visible = !cpu;
-					if (!cpu)
-						strum.playAnim('press', true);
-					if (!cpu)
-						strum.cover.animation.play('end', true);
-				}
 				invalNote(note);
 			}
 		});
@@ -189,10 +179,9 @@ class StrumLine extends FlxSpriteGroup
 
 	function invalNote(note:Note)
 	{
-		if (note.sustain != null)
-			note.sustain.kill();
-
 		note.kill();
+		notes.remove(note, true);
+		note.destroy();
 	}
 
 	public var hitNotes:Array<Note> = [];
@@ -257,7 +246,7 @@ class StrumLine extends FlxSpriteGroup
 			else if (!keyHold[strum.data])
 			{
 				if (strum.cover.animation.name != 'end')
-					strum.cover.visible = false;
+					strum.cover.active = false;
 				strum.playAnim('static', false);
 			}
 		});
@@ -276,7 +265,12 @@ class StrumLine extends FlxSpriteGroup
 
 			for (shittNo in hitNotes)
 			{
-				if (!shittNo.ignoreNote && keyPress[shittNo.noteData.data])
+				if (!shittNo.ignoreNote && keyPress[shittNo.noteData.data] && shittNo.canBeHit)
+					playerHit(shittNo);
+				if (!shittNo.ignoreNote
+					&& keyHold[shittNo.noteData.data]
+					&& (shittNo.canBeHit || shittNo.prevNote.wasGoodHit && shittNo.canBeHit)
+					&& shittNo.isHold)
 					playerHit(shittNo);
 			}
 		}
@@ -292,26 +286,27 @@ class StrumLine extends FlxSpriteGroup
 
 	function playerHit(shittNo:Note)
 	{
+		if (shittNo.ignoreNote || shittNo.wasGoodHit)
+			return;
 		var strum = strums.members[shittNo.noteData.data % strums.length];
-		strum.playAnim('confirm', true);
 
+		strum.playAnim('confirm', true);
 		if (character != null)
 			character.sing(shittNo, true);
 
-		if (shittNo.noteData.length > 0)
-		{
-			strum.cover.visible = true;
+		strum.cover.active = true;
 			strum.cover.animation.play('start');
-		}
+
 		hitSignal(shittNo);
 
 		shittNo.wasGoodHit = true;
+		if (!shittNo.isHold)
+			invalNote(shittNo);
 	}
 
 	public function beatHit(beat:Float)
 	{
 		if (character != null && (cpu || !cpu && !keyHold.contains(true)))
 			character.dance(beat);
-
 	}
 }

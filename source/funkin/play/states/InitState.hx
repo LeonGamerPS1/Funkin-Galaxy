@@ -1,6 +1,6 @@
 package funkin.play.states;
 
-import funkin.shaders.GrayScale;
+
 import openfl.filters.ShaderFilter;
 
 // init state or some shit

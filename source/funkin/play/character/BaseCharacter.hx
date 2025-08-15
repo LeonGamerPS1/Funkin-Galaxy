@@ -4,7 +4,9 @@ import animate.FlxAnimate;
 import animate.FlxAnimateFrames;
 import funkin.scripted.ScriptedCharacter.ScriptedBaseCharacter;
 import haxe.ui.navigation.INavigatableView;
+#if polymod
 import polymod.hscript.HScriptable.Script;
+#end
 
 typedef CharacterData =
 {
@@ -124,10 +126,11 @@ class BaseCharacter extends FlxSprite
 
 	public static var SingAnimations:Array<String> = ['singLEFT', 'singDOWN', 'singUP', 'singRIGHT'];
 
-	public function sing(note:Note, ?play:Bool = true)
+	// execute this shit before wasgoodhit becomes true
+	public function sing(note:Note, force:Bool = true, ?play:Bool = true)
 	{
 		if (note != null && play)
-			playAnim(SingAnimations[note.noteData.data % SingAnimations.length], true);
+			playAnim(SingAnimations[note.noteData.data % SingAnimations.length], force);
 		holdTimer = Conductor.instance.stepCrochet * json.holdSteps / 1000;
 	}
 
@@ -198,6 +201,7 @@ class BaseCharacter extends FlxSprite
 
 	public static function makeCharacter(char:String, isPlayer:Bool = false):BaseCharacter
 	{
+		#if polymod
 		for (char2 in ScriptedBaseCharacter.listScriptClasses())
 		{
 			if (char.replace('-', '').toLowerCase() == char2.toLowerCase())
@@ -205,6 +209,7 @@ class BaseCharacter extends FlxSprite
 			else
 				continue;
 		}
+		#end
 		var character:BaseCharacter = new BaseCharacter(char, isPlayer);
 
 		return character;

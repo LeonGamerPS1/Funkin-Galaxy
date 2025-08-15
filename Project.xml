@@ -61,7 +61,10 @@
 	<haxelib name="haxeui-core" />
 	<haxelib name="haxeui-flixel" />
 	<haxelib name="flixel-animate" />
-	<haxelib name="polymod" />
+	<haxelib name="funkin-modchart" />
+
+
+	<haxelib name="polymod" unless="flash" />
 	<haxelib name="extension-androidtools" if="android" />
 
 	<!--In
@@ -98,6 +101,11 @@
 	<haxedef name="FLX_NO_MOUSE" if="mobile" />
 	<haxedef name="FLX_NO_KEYBOARD" if="mobile" />
 	<haxedef name="FLX_NO_TOUCH" if="desktop" />
+
+
+	<haxedef name="FM_ENGINE" value="Galaxy" />
+	<haxedef name="FM_ENGINE_VERSION" value="0.1.0" />
+	<haxeflag name="--macro" value="modchart.backend.macros.Macro.includeFiles()" />
 	<!--<haxedef
 	name="FLX_NO_GAMEPAD" />-->
 
@@ -132,9 +140,9 @@
 
 	<!--Place
 	custom nodes like icons here-->
-	<icon path="art/icons/icon16.png" size='16'/>
-	<icon path="art/icons/icon32.png" size='32'/>
-	<icon path="art/icons/icon64.png" size='64'/>
+	<icon path="art/icons/icon16.png" size='16' />
+	<icon path="art/icons/icon32.png" size='32' />
+	<icon path="art/icons/icon64.png" size='64' />
 	<icon path="art/icons/iconOG.png" />
 
 </project>

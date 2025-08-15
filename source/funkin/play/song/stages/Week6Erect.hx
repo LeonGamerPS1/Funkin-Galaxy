@@ -1,8 +1,9 @@
 package funkin.play.song.stages;
 
 import flixel.addons.display.FlxBackdrop;
+#if !flash
 import funkin.shaders.DropShadowShader;
-
+#end
 class Week6Erect extends BaseStage
 {
 	var bgSky:FlxBackdrop = new FlxBackdrop(Paths.image('weeb/erect/weebSky'), XY);
@@ -51,6 +52,7 @@ class Week6Erect extends BaseStage
 	// this adds the dropshadow, the variable named "type" is for deciding what mask it should use i think????
 	static public function dropShadow(character:BaseCharacter, type:Int)
 	{
+		#if !flash
 		var rim:DropShadowShader = new DropShadowShader();
 		rim.setAdjustColor(-66, -10, 24, -23);
 		rim.color = 0xFF52351d;
@@ -92,6 +94,7 @@ class Week6Erect extends BaseStage
 				rim.maskThreshold = 1;
 				rim.useAltMask = true;
 		}
+		#end
 	}
 
 	override function update(elapsed:Float)

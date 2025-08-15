@@ -1,7 +1,9 @@
 package funkin.scripted;
 
 import funkin.play.character.BaseCharacter;
+#if polymod
 import polymod.hscript.HScriptedClass;
 
 @:hscriptClass
-class ScriptedStage extends BaseStage implements HScriptedClass {}
+#end
+class ScriptedStage extends BaseStage #if polymod implements HScriptedClass #end {}

@@ -33,6 +33,7 @@ class HealthIcon extends FlxSprite
 		iconOffsets[0] = (width - 150) / iSize;
 		iconOffsets[1] = (height - 150) / iSize;
 		updateHitbox();
+		lerpIconSize(true);
 	}
 
 	public var autoAdjustOffset:Bool = true;
@@ -52,5 +53,34 @@ class HealthIcon extends FlxSprite
 	public function getCharacter():String
 	{
 		return animation.name;
+	}
+	public var HEALTH_ICON_SIZE = 150.0;
+	public var size = FlxPoint.get(1, 1);
+
+	public function lerpIconSize(force:Bool = false):Void
+	{
+		// Lerp the health icon back to its normal size,
+		// while maintaining aspect ratio.
+		if (this.width > this.height)
+		{
+			// Apply linear interpolation while accounting for frame rate.
+			var targetSize:Int = Std.int(MathUtil.smoothLerpPrecision(this.width, HEALTH_ICON_SIZE * this.size.x, FlxG.elapsed, 0.512));
+
+			if (force)
+				targetSize = Std.int(HEALTH_ICON_SIZE * this.size.x);
+
+			setGraphicSize(targetSize, 0);
+		}
+		else
+		{
+			var targetSize:Int = Std.int(MathUtil.smoothLerpPrecision(this.height, HEALTH_ICON_SIZE * this.size.y, FlxG.elapsed, 0.512));
+
+			if (force)
+				targetSize = Std.int(HEALTH_ICON_SIZE * this.size.y);
+
+			setGraphicSize(0, targetSize);
+		}
+
+		this.updateHitbox();
 	}
 }
