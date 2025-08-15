@@ -120,7 +120,7 @@ class PlayState extends FlxUIState implements IStageState
 		Conductor.instance.onMeasure.add(section);
 		fnfmodchart = new Manager();
 		// Config.HOLDS_BEHIND_STRUM = true;
-		// Config.PREVENT_SCALED_HOLD_END = true;
+		Config.PREVENT_SCALED_HOLD_END = true;
 
 		var skin = 'default';
 		if (song.skin != null && song.skin.length > 0)

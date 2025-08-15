@@ -11,7 +11,7 @@ import extension.androidtools.content.Context;
 
 class Main extends Sprite
 {
-	public static var subdivs(default, null):Int = 1;
+	public static var subdivs(default, null):Int = 2;
 
 	public function new()
 	{

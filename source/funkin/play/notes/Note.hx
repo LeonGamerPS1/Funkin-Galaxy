@@ -72,7 +72,7 @@ class Note extends FlxSprite
 			scale.set(skinData.scale, skinData.scale);
 			scale.x *= sizeMult;
 			scale.y *= sizeMult;
-			multAlpha = 0.7;
+			// multAlpha = 0.7;
 			updateHitbox();
 			set.x -= width / 2;
 
