@@ -40,6 +40,8 @@ class SustainCover extends FlxSprite
 	}
 	override function draw()
 	{
+		if (!active)
+			return;
 		centerOffsets();
 		centerOrigin();
 
