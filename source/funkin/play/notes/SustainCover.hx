@@ -40,13 +40,14 @@ class SustainCover extends FlxSprite
 	}
 	override function draw()
 	{
-		if (!active)
-			return;
 		centerOffsets();
 		centerOrigin();
 
 
 		scale.set(parent.skinData.cover.scaleX, parent.skinData.cover.scaleY);
+		if (!active)
+			return;
+		
 		setPosition(parent.x + parent.skinData.cover.offsetX, parent.y + parent.skinData.cover.offsetY);
 		super.draw();
 	}
